@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cryptocurrency Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <style>
+        #myChart {
+            width: 600px !important; 
+            height:600px !important; 
+        }
+    </style>
+        
+
+    <canvas id="myChart" width="200" height="200"></canvas>
+    <section class="currencies">
+        <button id="leftButton" class="scroll-button left">◄</button>
+        <ul class="currencies_grafs">
+            <li>
+                <img src="../images/crypto_small_icons/BTC.png" alt="BTC">
+                <div>
+                    <h6>BTC/USDT</h6>
+                    <h6>68000.55</h6>
+                </div>
+                <div class="totalAmount generalClassTotalAmount">123</div>
+            </li>
+            <li>
+                <img src="../images/crypto_small_icons/ETH.png" alt="ETH">
+                <div>
+                    <h6>ETH/USDT</h6>
+                    <h6>3856.09</h6>
+                </div>
+                <div class="totalAmount generalClassTotalAmount">1244</div>
+            </li>
+            <li>
+                <img src="../images/crypto_small_icons/SOL.png" alt="SOL">
+                <div>
+                    <h6>SOL/USDT</h6>
+                    <h6>323.03</h6>
+                </div>
+                <div class="totalAmount generalClassTotalAmount">1234</div>
+            </li>
+            <li>
+                <img src="../images/crypto_small_icons/XRP.png" alt="XRP">
+                <div>
+                    <h6>XRP/USDT</h6>
+                    <h6>64.55</h6>
+                </div>
+                <div class="totalAmount generalClassTotalAmount">1234</div>
+            </li>
+            <li>
+                <img src="../images/crypto_small_icons/AVAX.png" alt="AVAX">
+                <div>
+                    <h6>AVAX/USDT</h6>
+                    <h6>54.25</h6>
+                </div>
+                <div class="totalAmount generalClassTotalAmount">124</div>
+            </li>
+            <li>
+                <img src="../images/crypto_small_icons/SUI.png" alt="SUI">
+                <div>
+                    <h6>SUI/USDT</h6>
+                    <h6>34.55</h6>
+                </div>
+                <div class="totalAmount generalClassTotalAmount"></div>
+            </li>
+            <li>
+                <img src="../images/crypto_small_icons/SEI.png" alt="SEI">
+                <div>
+                    <h6>SEI/USDT</h6>
+                    <h6>14.55</h6>
+                </div>
+                <div class="totalAmount generalClassTotalAmount"></div>
+            </li>
+            <li>
+                <img src="../images/crypto_small_icons/STRK.png" alt="STRK">
+                <div>
+                    <h6>STRK/USDT</h6>
+                    <h6>123.22</h6>
+                </div>
+                <div class="totalAmount generalClassTotalAmount"></div>
+            </li>
+        </ul>
+        <button id="rightButton" class="scroll-button right">►</button>
+    </section>
+    <script src="draw.js"></script>
+</body>
+</html>

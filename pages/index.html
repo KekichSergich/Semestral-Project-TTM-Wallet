@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="../css/modal.css">
+        <title>Crypto Wallet</title>
+    </head>
+    <body>
+        <section class="balance">
+            <div class="big_img_container margin-top">
+                <div class="text_container">
+                    <h5>TTM Wallet</h5>
+                    <h1>To The Moon Wallet</h1>
+                    <p>Simplicity. Notes. Crypto. Everything you need to record, display and analyze your cryptocurrency purchases</p>
+                </div>
+                <div class="crypto_img_container">
+                </div>
+            </div>
+            <div class="balance_overview container_overview margin-top">
+                <h3>Your balance</h3>
+                <img src="../images/icons/free-icon-astronaut-4269088.png" alt="avatar">
+                <div class="amount_area">
+                    <p>Amount:</p>
+                    <h3>54322055$</h3>
+                </div>
+                <button class="purpleButton recordButton" id="makeRecordButton">Make new record</button>
+                <button id="openNewPairModalButton" class="purpleButton">Add new pair</button>
+            </div>
+            <div class="records_overview container_overview margin-top">
+                <div class="row">
+                    <h3>Your records</h3>
+                    <button class="purpleButton resetButton" id="resetDataButton">Reset Data</button>
+                </div>
+                <table id="tableNotes">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Price $</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section class="currencies">
+            <button id="leftButton" class="scroll-button left">◄</button>
+            <ul class="currencies_grafs">
+                <!-- <li>
+                    <img src="../images/crypto_small_icons/BTC.png" alt="BTC">
+                    <div>
+                        <h6>BTC/USDT</h6>
+                        <h6>68000.55</h6>
+                    </div>
+                    <div class="totalAmount generalClassTotalAmount"></div>
+                </li>
+                <li>
+                    <img src="../images/crypto_small_icons/ETH.png" alt="ETH">
+                    <div>
+                        <h6>ETH/USDT</h6>
+                        <h6>3856.09</h6>
+                    </div>
+                    <div class="totalAmount generalClassTotalAmount"></div>
+                </li>
+                <li>
+                    <img src="../images/crypto_small_icons/SOL.png" alt="SOL">
+                    <div>
+                        <h6>SOL/USDT</h6>
+                        <h6>323.03</h6>
+                    </div>
+                    <div class="totalAmount generalClassTotalAmount"></div>
+                </li>
+                <li>
+                    <img src="../images/crypto_small_icons/XRP.png" alt="XRP">
+                    <div>
+                        <h6>XRP/USDT</h6>
+                        <h6>64.55</h6>
+                    </div>
+                    <div class="totalAmount generalClassTotalAmount"></div>
+                </li>
+                <li>
+                    <img src="../images/crypto_small_icons/AVAX.png" alt="AVAX">
+                    <div>
+                        <h6>AVAX/USDT</h6>
+                        <h6>54.25</h6>
+                    </div>
+                    <div class="totalAmount generalClassTotalAmount"></div>
+                </li>
+                <li>
+                    <img src="../images/crypto_small_icons/SUI.png" alt="SUI">
+                    <div>
+                        <h6>SUI/USDT</h6>
+                        <h6>34.55</h6>
+                    </div>
+                    <div class="totalAmount generalClassTotalAmount"></div>
+                </li>
+                <li>
+                    <img src="../images/crypto_small_icons/SEI.png" alt="SEI">
+                    <div>
+                        <h6>SEI/USDT</h6>
+                        <h6>14.55</h6>
+                    </div>
+                    <div class="totalAmount generalClassTotalAmount"></div>
+                </li>
+                <li>
+                    <img src="../images/crypto_small_icons/STRK.png" alt="STRK">
+                    <div>
+                        <h6>STRK/USDT</h6>
+                        <h6>123.22</h6>
+                    </div>
+                    <div class="totalAmount generalClassTotalAmount"></div>
+                </li> -->
+            </ul>
+            <button id="rightButton" class="scroll-button right">►</button>
+        </section>
+        <div id="newPairModal" class="modalWindow">
+            <form id="newPairForm">
+                <span id="closeNewPairModalButton">x</span>
+                <label for="pairName">Pair Name</label>
+                <input type="text" id="pairName" class="newPairInput" placeholder="For ex. CVUT/USDT" required>
+                <label for="pairPrice">Pair Price</label>
+                <input type="text" id="pairPrice" class="newPairInput" required>
+                <div class="file-input-container">
+                    <label for="imageSrc" class="file-input-label">Choose an Image</label>
+                    <input type="file" id="imageSrc" name="imageSrc" accept="image/jpeg, image/png, image/jpg, image/gif" required="">
+                    <p id="file-name" class="file-input-name">No file chosen</p>
+                </div>
+                
+                
+                <button class="purpleButton" id="addPairButton">Add Pair</button>
+            </form>
+        </div>
+        
+        <div class="canvas_and_others">
+            <canvas id="myCryptoChart" width="400" height="400"></canvas>
+        </div>
+        
+
+        <div class="modalWindow" id="modalWindow">
+            <form id="recordForm">
+                <span id="closeModalWindowButton">x</span>
+                <label for="date">Date</label>
+                <input type="date" id="date" required>
+                <!-- <div class="row">
+                    <div class="column">
+                        <label for="cryptoName">Crypto's name</label>
+                        <select name="cryptoName" id="cryptoName" size="1">
+                            
+                        </select>
+                    </div>
+                </div> -->
+                
+                <label for="price">Price</label>
+                <input type="text" id="price" required>
+
+                <label for="amount">Amount</label>
+                <input type="text" id="amount" required>
+                <button class="purpleButton recordButton windowButton" id="submitRecord">Make record</button>
+            </form>
+        </div>
+
+        <script src="../js/modalWindows.js"></script>
+        <script src="../js/generateUnicId.js"></script>
+        <script src="../js/CryptoNote.js"></script>
+        <script src="../js/storage.js"></script>
+        <script src="../js/addCrypto.js"></script>
+        <script src="../js/table.js"></script>
+        <!-- <script src="../js/getPriceInfo.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </body>
+</html>

@@ -687,6 +687,50 @@ ul.currencies_grafs {
     align-items: flex-start;
 }
 
+
+/*Dropdown options*/
+
+.cryptoPairDropdownOptions{
+    position: relative;
+    display: inline-block;
+    max-width: 158px;
+}
+
+.cryptoPairDropdownOptions div{
+    width: 100%; /* ширина равна ширине родителя */
+    height: 100px;
+    background-color: #2b2635;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: none;
+}
+
+.cryptoPairDropdownOptions div ul {
+    width: 100%;
+    color:#6a6d7a;
+    margin-top:5px;
+}
+
+.cryptoPairDropdownOptions div ul li{
+    margin-left: 5px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.cryptoPairDropdownOptions div ul li:hover{
+    color:#aaa
+}
+
+
+
+
+
+
+
+
+
+
+
 @media screen and (max-width: 1290px) {
     .canvas_and_others {
         -webkit-justify-content: space-between;

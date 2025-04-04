@@ -2,31 +2,42 @@ let modalWindow = document.getElementById("modalWindow");
 let recordForm = document.getElementById("recordForm");
 let closeModalWindowButton = document.getElementById("closeModalWindowButton");
 
-function openRecordMakerModalWindow(){
-    modalWindow.style.display = "flex";    
+function openModal(modal){
+    modal.style.display = "flex";    
     setTimeout(() => {
-        recordForm.classList.add("show");
-    }, 50);
+        modal.querySelector("form").classList.add("show");
+        makeDropDownArea();
+    }, 20);
 }
 
-makeRecordButton.addEventListener("click", function(){
-    openRecordMakerModalWindow()
-});
-
-function closeRecordMakerModalWindow(){
-    recordForm.classList.remove("show");
-    recordForm.classList.add("close");
+function closeModal(modal){
+    modal.querySelector("form").classList.remove("show");
+    modal.querySelector("form").classList.add("close");
 
     setTimeout(() => {
-        modalWindow.style.display = "none";
-        recordForm.classList.remove("close");
+        modal.style.display = "none";
+        modal.querySelector("form").classList.remove("close");
     }, 100);
 }
 
+makeRecordButton.addEventListener("click", function(){
+    openModal(modalWindow)
+});
+
 closeModalWindowButton.addEventListener("click", function(){
-    closeRecordMakerModalWindow();
+    closeModal(modalWindow);
 })
 
-// window.addEventListener("click", function(){
-//     modalWindow.style.display = "none";
-// })
+let addNewPairModalWindow = document.getElementById("addNewPairModalWindow");
+let openNewPairModalButton = document.getElementById("openNewPairModalButton");
+let closeNewPairModalButton = document.getElementById("closeNewPairModalButton");
+
+openNewPairModalButton.addEventListener("click", function(){
+    openModal(addNewPairModalWindow);
+})
+
+closeNewPairModalButton.addEventListener("click", function(){
+    closeModal(addNewPairModalWindow);
+})
+
+

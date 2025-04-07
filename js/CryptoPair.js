@@ -24,20 +24,11 @@ class CryptoPair{
     }
 }
 
-async function getCryptoPairsList(){
-    try {
-        const response = await fetch("https://api.coingecko.com/api/v3/coins/list");
-        const cryptoPairListOptions = await response.json();
-        return cryptoPairListOptions;
-    } catch (error) {
-        console.error("Error with fetch: ", error);
-        return [];
-    }
-}
+
+
 
 
 let cryptoNameInput = document.getElementById("cryptoName");
-console.log(cryptoNameInput)
 
 cryptoNameInput.addEventListener("click", function(){
     let div = document.querySelector(".cryptoPairDropdownOptions div");
@@ -55,7 +46,6 @@ cryptoNameInput.addEventListener("click", function(){
 let ul = document.getElementById("dropdownOptionsUl");
 
 async function makeDropDownArea(){
-    let cryptoPairListOptions = await getCryptoPairsList();
     console.log(cryptoPairListOptions);
     cryptoPairListOptions.forEach(coin =>{
         const li = document.createElement("li");
@@ -65,7 +55,7 @@ async function makeDropDownArea(){
      
 }
 
-let cryptoPairListOptions = await getCryptoPairsList();
+
 
 //find an appropriate crypto in the list of crypto by letters from input
 async function findCryptoByLetters(){
@@ -83,8 +73,7 @@ async function findCryptoByLetters(){
 
     filteredList.forEach(coin => {
         const li = document.createElement("li");
-        li.innerHTML = coin.symbol;
-        ul.appendChild(li);
+        li.innerHTML = coin.symbol;        ul.appendChild(li);
     })
 }
 

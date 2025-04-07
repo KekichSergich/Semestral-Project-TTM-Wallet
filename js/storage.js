@@ -42,3 +42,12 @@ function clearStorageData(){
         row.remove(); 
     });
 }
+
+async function saveCryptoInfoListToLocalStorage(){
+    const cryptoPairListOptions = await getCryptoPairsList();
+    localStorage.setItem("CryptoListInfo", JSON.stringify(cryptoPairListOptions));
+    localStorage.setItem("CryptoListLastUpdate", Date.now().toString());
+}
+
+
+

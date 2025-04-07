@@ -34,6 +34,11 @@ function getRowsStartFromSecondRow(){
     
 }
 
+function getFromLocalStorage(key){
+    const value = JSON.parse(localStorage.getItem(key));
+    return value;
+}
+
 function clearStorageData(){
     let rowsToDelete = getRowsStartFromSecondRow();
 

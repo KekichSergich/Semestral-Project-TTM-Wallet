@@ -1,17 +1,17 @@
-let cryptoListInfo = JSON.parse(localStorage.getItem("CryptoListInfo")) || [];
+// let cryptoListInfo = JSON.parse(localStorage.getItem("CryptoListInfo")) || [];
+let cryptoListInfo = getFromLocalStorage("CryptoListInfo") || [];
 console.log(cryptoListInfo)
+let res = shouldUpdateCryptoList();
 
 if (cryptoListInfo.length === 0) {
     saveCryptoInfoListToLocalStorage();
     console.log("saved")
-} else {
-    shouldUpdateCryptoList();
-}
-
-setInterval(saveCryptoInfoListToLocalStorage, 86400000);
+} else if (res == true) {
+    saveCryptoInfoListToLocalStorage();
+} 
 
 function shouldUpdateCryptoList(){
-    lastUpdate = localStorage.getItem("CryptoListLastUpdate");
+    lastUpdate = getFromLocalStorage("CryptoListLastUpdate");
 
     //never has been updated 
     if (!lastUpdate){
@@ -21,5 +21,7 @@ function shouldUpdateCryptoList(){
     const now = Date.now();
     const oneDay = 24*60*60*1000;
 
-    return now - Number(lastUpdate) > oneDay;
+    if (now - Number(lastUpdate) > oneDay){
+        return true;
+    }
 }

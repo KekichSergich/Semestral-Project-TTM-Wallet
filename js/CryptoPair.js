@@ -25,10 +25,9 @@ class CryptoPair{
 }
 
 
-
-
-
 let cryptoNameInput = document.getElementById("cryptoName");
+let cryptoPairListOptions = getFromLocalStorage("CryptoListInfo");
+let ul = document.getElementById("dropdownOptionsUl");
 
 cryptoNameInput.addEventListener("click", function(){
     let div = document.querySelector(".cryptoPairDropdownOptions div");
@@ -43,10 +42,7 @@ cryptoNameInput.addEventListener("click", function(){
 })
 
 
-let ul = document.getElementById("dropdownOptionsUl");
-
 async function makeDropDownArea(){
-    console.log(cryptoPairListOptions);
     cryptoPairListOptions.forEach(coin =>{
         const li = document.createElement("li");
         li.innerHTML = coin.symbol;
@@ -56,28 +52,38 @@ async function makeDropDownArea(){
 }
 
 
-
 //find an appropriate crypto in the list of crypto by letters from input
 async function findCryptoByLetters(){
 
-    console.log(cryptoPairListOptions);
-    
-    
-    let inputValue = document.getElementById("cryptoNameInput").value;
+    let inputValue = document.getElementById("cryptoName").value;
 
-    let filteredList = cryptoPairListOptions.filter(coin =>{
-        coin.symbol.toLowerCase().startsWith((inputValue));
-    })
+    let filteredList = cryptoPairListOptions.filter(coin =>
+        coin.symbol.toLowerCase().startsWith(inputValue.toLowerCase())
+    );
     
     ul.innerHTML = "";
 
     filteredList.forEach(coin => {
         const li = document.createElement("li");
-        li.innerHTML = coin.symbol;        ul.appendChild(li);
+        li.innerHTML = coin.symbol;        
+        ul.appendChild(li);
     })
 }
 
-cryptoNameInput.addEventListener("keydown", findCryptoByLetters);
+cryptoNameInput.addEventListener("input", findCryptoByLetters);
+
+
+
+ul.addEventListener("click", (event) =>{
+    const target = event.target;
+    console.log(target);
+    
+    if(target.tagName === "LI"){
+        cryptoNameInput.value = target.textContent;
+        ul.innerHTML = ""
+    } 
+})
+
 
 
 // addEventListener na posunuti a callback definovany zde nebo jinde

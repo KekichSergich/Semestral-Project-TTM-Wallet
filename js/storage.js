@@ -1,3 +1,5 @@
+let table = document.getElementById("tableNotes");
+
 function saveCryptoNoteToStorage(cryptoNote){
     let storedCryptoNotes = JSON.parse(localStorage.getItem("storedCryptoNotes")) || [];
     storedCryptoNotes.push(cryptoNote);
@@ -10,19 +12,47 @@ function removeFromStorage(id){
     localStorage.setItem("storedCryptoNotes", JSON.parse(filteredStoredCryptoNotes));
 }
 
-function clearStorageData(){
-    localStorage.clear()
-}
-
 function loadCryptoNotesFromStorageToTable(){
     let storedCryptoNotes = JSON.parse(localStorage.getItem("storedCryptoNotes")) || [];
-    let table = document.getElementById("tableNotes");
-    // let rows = table.rows;
+    // let table = document.getElementById("tableNotes");
+    // // let rows = table.rows;
 
     storedCryptoNotes.forEach(note => {
-        let cryptoNote = new CryptoNote(note.id, note.date, note.price, note.amount);
-        cryptoNote.addCryptoNoteToTable();
+        let cryptoNote = new CryptoNote(note.id, note.date, note.name, note.price, note.amount);
+        cryptoNote.renderNote();
     });
 }
 
 document.addEventListener("DOMContentLoaded", loadCryptoNotesFromStorageToTable());
+
+//get all tds of rows starting from second row, because we need to delete all information, not the cell's name.
+function getRowsStartFromSecondRow(){
+    let rows = Array.from(document.querySelectorAll("#tableNotes tr"));
+    let rowsWithoutFirstRow = rows.slice(1);
+    console.log(rowsWithoutFirstRow);
+    return rowsWithoutFirstRow;
+    
+}
+
+function getFromLocalStorage(key){
+    const value = JSON.parse(localStorage.getItem(key));
+    return value;
+}
+
+function clearStorageData(){
+    let rowsToDelete = getRowsStartFromSecondRow();
+
+    localStorage.clear();
+    rowsToDelete.forEach(row => {
+        row.remove(); 
+    });
+}
+
+async function saveCryptoInfoListToLocalStorage(){
+    const cryptoPairListOptions = await getCryptoPairsList();
+    localStorage.setItem("CryptoListInfo", JSON.stringify(cryptoPairListOptions));
+    localStorage.setItem("CryptoListLastUpdate", Date.now().toString());
+}
+
+
+

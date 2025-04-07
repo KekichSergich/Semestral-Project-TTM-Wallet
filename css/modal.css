@@ -1,3 +1,10 @@
+datalist{
+    display: flex;
+    max-width: 300px;
+    width:100%;
+}
+
+
 .modalWindow {
     display: none;
     position: fixed;
@@ -178,10 +185,12 @@ input {
 }
 
 input:focus {
-    border-color: #ac6aec;
+    /* border-color: #ac6aec;
     -webkit-box-shadow: 0px 0px 8px 4px #c59af4;
     -moz-box-shadow: 0px 0px 8px 4px #c59af4;
-    box-shadow: 0px 0px 8px 4px #c59af4;
+    box-shadow: 0px 0px 8px 4px #c59af4; */
+    border-color: none;
+    border-radius: 10px 10px 0px 0px;
 }
 
 input:not(:first-of-type) {

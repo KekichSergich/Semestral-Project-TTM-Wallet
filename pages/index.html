@@ -122,8 +122,8 @@
             </ul>
             <button id="rightButton" class="scroll-button right">►</button>
         </section>
-        <div id="newPairModal" class="modalWindow">
-            <form id="newPairForm">
+        <div id="addNewPairModalWindow" class="modalWindow">
+            <form id="addNewPairForm">
                 <span id="closeNewPairModalButton">x</span>
                 <label for="pairName">Pair Name</label>
                 <input type="text" id="pairName" class="newPairInput" placeholder="For ex. CVUT/USDT" required>
@@ -150,14 +150,21 @@
                 <span id="closeModalWindowButton">x</span>
                 <label for="date">Date</label>
                 <input type="date" id="date" required>
-                <!-- <div class="row">
+                <div class="row">
                     <div class="column">
                         <label for="cryptoName">Crypto's name</label>
-                        <select name="cryptoName" id="cryptoName" size="1">
-                            
-                        </select>
+                        <div class="cryptoPairDropdownOptions">
+                            <input id="cryptoName" placeholder="Enter the name"/>
+                            <div>
+                                <ul id="dropdownOptionsUl">
+
+                                </ul>
+                            </div>
+                        </div>
+                        <datalist id="crypto-options"></datalist>
                     </div>
-                </div> -->
+                    
+                </div>
                 
                 <label for="price">Price</label>
                 <input type="text" id="price" required>
@@ -171,7 +178,10 @@
         <script src="../js/modalWindows.js"></script>
         <script src="../js/generateUnicId.js"></script>
         <script src="../js/CryptoNote.js"></script>
+        <script src="../js/getCryptoPairsList.js"></script>
         <script src="../js/storage.js"></script>
+        |<script src="../js/CryptoPair.js"></script>
+        <script src="../js/checkCryptoListInStorage.js"></script>
         <script src="../js/addCrypto.js"></script>
         <script src="../js/table.js"></script>
         <!-- <script src="../js/getPriceInfo.js"></script> -->

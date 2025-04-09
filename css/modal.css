@@ -134,7 +134,7 @@ form div.row {
     justify-content: space-around;
 }
 
-form div.row div.column {
+form  div.column {
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
@@ -153,7 +153,7 @@ form div.row div.column {
     margin: 10px;
 }
 
-form div.row div.column input {
+form div.column input {
     max-width: 150px;
 }
 

@@ -6,7 +6,6 @@ function openModal(modal){
     modal.style.display = "flex";    
     setTimeout(() => {
         modal.querySelector("form").classList.add("show");
-        makeDropDownArea();
     }, 20);
 }
 

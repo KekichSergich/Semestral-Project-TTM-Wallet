@@ -20,8 +20,6 @@ function removeFromStorage(id){
 
 function loadCryptoNotesFromStorageToTable(){
     let storedCryptoNotes = JSON.parse(localStorage.getItem("storedCryptoNotes")) || [];
-    // let table = document.getElementById("tableNotes");
-    // // let rows = table.rows;
 
     storedCryptoNotes.forEach(note => {
         let cryptoNote = new CryptoNote(note.id, note.date, note.name, note.price, note.amount);
@@ -29,7 +27,18 @@ function loadCryptoNotesFromStorageToTable(){
     });
 }
 
-document.addEventListener("DOMContentLoaded", loadCryptoNotesFromStorageToTable());
+document.addEventListener("DOMContentLoaded", loadCryptoNotesFromStorageToTable);
+
+function loadCryptoPairsFromLocalStorageToUl(){
+    let storedCryptoPairs = JSON.parse(localStorage.getItem("storedCryptoPairs")) || [];
+
+    storedCryptoPairs.forEach(pair => {
+        let cryptoPair = new CryptoPair(pair.name, pair._price, pair.image);
+        cryptoPair.renderCryptoPair();
+    })
+}
+
+document.addEventListener("DOMContentLoaded", loadCryptoPairsFromLocalStorageToUl);
 
 //get all tds of rows starting from second row, because we need to delete all information, not the cell's name.
 function getRowsStartFromSecondRow(){

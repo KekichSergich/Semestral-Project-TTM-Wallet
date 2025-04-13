@@ -71,12 +71,10 @@ function setClickedListItemAsInputValue(){
     activeUl.addEventListener("click", (event) => {
         const target = event.target;
         
-        console.log(checkIfInputValueIsSet);
         if (target.tagName === "LI" && activeInput) {
             activeInput.value = target.textContent;
             activeUl.innerHTML = "";
             checkIfInputValueIsSet = true;
-            console.log(checkIfInputValueIsSet);
         }
         if (checkIfInputValueIsSet == true) {
             setCryptoPairPriceAndImage(activeInput.value);
@@ -89,10 +87,8 @@ function setCryptoPairPriceAndImage(targetName){
     if (checkIfInputValueIsSet == true){
         cryptoPairListOptions.forEach(coin => {
             if (coin.symbol == targetName){
-                console.log("sdsd");
                 priceInput.value = coin.current_price;
                 imageInput.value = coin.image;
-                console.log(priceInput.value);
             }
         })
     }

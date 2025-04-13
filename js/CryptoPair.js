@@ -28,12 +28,31 @@ class CryptoPair{
 
         let modalWindow = document.getElementById("addNewPairModalWindow");
         closeModal(modalWindow);
-
-
     }
 
     renderCryptoPair(){
+        console.log("rendering...")
+        const ul = document.querySelector(".currencies_grafs");
+        const li = document.createElement("li");
+        const img = document.createElement("img");
+        const div = document.createElement("div");
+        const h6Name = document.createElement("h6");
+        const h6Price = document.createElement("h6");
+        const divTotalAmount = document.createElement("div");
+        const closeButton = document.createElement("span");
 
+        divTotalAmount.classList.add("totalAmount");
+        divTotalAmount.classList.add("generalClassTotalAmount");
+        closeButton.classList.add("removeButton");
+
+        li.append(img,div,h6Name,h6Price,divTotalAmount,closeButton);
+
+        ul.append(li);
+
+        img.src = this.image;
+        h6Name.textContent = `${(this.name).toUpperCase()}/USDT`;
+        h6Price.textContent = this._price;
+        closeButton.textContent = "x";
     }
 
     keepUpdatedPrice() {
@@ -45,6 +64,10 @@ class CryptoPair{
 
 
 
+}
+
+function countTotalCryptoAmount(name){
+    
 }
 
 let addPairButtonSubmit = document.getElementById("addPairButton");

@@ -703,6 +703,7 @@ ul.currencies_grafs {
     overflow-y: auto;
     overflow-x: hidden;
     display: none;
+    border: 1.5px solid white;
 }
 
 .cryptoPairDropdownOptions div ul {

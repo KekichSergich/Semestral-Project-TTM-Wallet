@@ -6,6 +6,12 @@ function saveCryptoNoteToStorage(cryptoNote){
     localStorage.setItem("storedCryptoNotes", JSON.stringify(storedCryptoNotes));
 }
 
+function saveCryptoPairToLocalStorage(cryptoPair){
+    let storedCryptoPairs = JSON.parse(localStorage.getItem("storedCryptoPairs"))  || [];
+    storedCryptoPairs.push(cryptoPair);
+    localStorage.setItem("storedCryptoPairs", JSON.stringify(storedCryptoPairs));   
+}
+
 function removeFromStorage(id){
     let storedCryptoNotes = JSON.parse(localStorage.getItem("storedCryptoNotes")) || [];
     const filteredStoredCryptoNotes = storedCryptoNotes.filter(note => note.id != id);

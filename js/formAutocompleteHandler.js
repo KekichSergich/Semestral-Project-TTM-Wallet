@@ -8,8 +8,10 @@ let activeDiv = null;
 let activeUl = null;
 
 
+//show the crypto's list when click on input. Determine current clicked input, current div and ul to work with.
 cryptoInputs.forEach(input => {
-    input.addEventListener("click", function(){
+    input.addEventListener("click", function(event){
+        event.stopPropagation();
         activeInput = input;
 
         const parentContainer = input.closest(".cryptoPairDropdownOptions");
@@ -19,11 +21,12 @@ cryptoInputs.forEach(input => {
 
         activeDiv.style.display = "flex";
     
-        input.style.borderRadius = "10px 10px 0px 0px";
+        activeInput.style.borderRadius = "10px 10px 0px 0px";
         makeDropDownArea();
         setClickedListItemAsInputValue();
     })
 })
+
 
 function makeDropDownArea(){
     cryptoPairListOptions.forEach(coin =>{
@@ -34,6 +37,7 @@ function makeDropDownArea(){
     })
      
 }
+
 
 //find an appropriate crypto in the list of crypto by letters from input
 function findCryptoByLetters(){
@@ -58,17 +62,50 @@ cryptoInputs.forEach(input =>{
 })
 
 // Set clicked list item as input value and clear suggestions
+const nameInput = document.getElementById("pairName");
+const priceInput = document.getElementById("pairPrice");
+const imageInput = document.getElementById("imageSrc");
+let checkIfInputValueIsSet = false;
+
 function setClickedListItemAsInputValue(){
     activeUl.addEventListener("click", (event) => {
         const target = event.target;
         
+        console.log(checkIfInputValueIsSet);
         if (target.tagName === "LI" && activeInput) {
             activeInput.value = target.textContent;
             activeUl.innerHTML = "";
+            checkIfInputValueIsSet = true;
+            console.log(checkIfInputValueIsSet);
         }
+        if (checkIfInputValueIsSet == true) {
+            setCryptoPairPriceAndImage(activeInput.value);
+        }
+        activeDiv.style.display = "none";
     })
 }
 
+function setCryptoPairPriceAndImage(targetName){
+    if (checkIfInputValueIsSet == true){
+        cryptoPairListOptions.forEach(coin => {
+            if (coin.symbol == targetName){
+                console.log("sdsd");
+                priceInput.value = coin.current_price;
+                imageInput.value = coin.image;
+                console.log(priceInput.value);
+            }
+        })
+    }
+}
+
+document.addEventListener("click", (event) => {
+    if(activeDiv && !activeDiv.contains(event.target)){
+        activeDiv.style.display = "none";
+        activeInput = null;
+        activeDiv = null;
+        activeUl = null;
+    }   
+});
 
 
     // 1) zredukovat

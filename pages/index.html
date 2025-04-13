@@ -124,38 +124,35 @@
         </section>
 
 
+
+        <!-- NEW PAIR FORM -->
+
         <div id="addNewPairModalWindow" class="modalWindow">
             <form id="addNewPairForm">
                 <span id="closeNewPairModalButton">x</span>
                 <div class="column">
                     <label for="pairName">Pair Name</label>
                     <div class="cryptoPairDropdownOptions">
-                        <input type="text" id="pairName" class="cryptoNameInputsForm" placeholder="For ex. CVUT/USDT" required>
+                        <input type="text" id="pairName" class="cryptoNameInputsForm" autocomplete="off" placeholder="For ex. btc" required>
                         <div>
-                            <ul class="dropdownOptionsUl">
-
-                            </ul>
+                            <ul class="dropdownOptionsUl"></ul>
                         </div>
                     </div>
                 </div>
                 
                 <label for="pairPrice">Pair Price</label>
-                <input type="text" id="pairPrice" class="newPairInput" required>
+                <input type="text" id="pairPrice" class="newPairInput" autocomplete="off" required>
                 <div class="file-input-container">
-                    <label for="imageSrc" class="file-input-label">Choose an Image</label>
-                    <input type="file" id="imageSrc" name="imageSrc" accept="image/jpeg, image/png, image/jpg, image/gif" required="">
-                    <p id="file-name" class="file-input-name">No file chosen</p>
-                </div>
-                
-                
+                    <label for="imageSrc">Choose an Image</label>
+                    <input type="text" id="imageSrc" name="imageSrc" class="newPairInput" required>
+                </div>              
                 <button class="purpleButton" id="addPairButton">Add Pair</button>
             </form>
         </div>
         
-        <div class="canvas_and_others">
-            <canvas id="myCryptoChart" width="400" height="400"></canvas>
-        </div>
         
+
+        <!-- NEW CRYPTO NOTE FORM-->
 
         <div class="modalWindow" id="modalWindow">
             <form id="recordForm">
@@ -165,22 +162,16 @@
                 <div class="column">
                     <label for="cryptoName">Crypto's name</label>
                     <div class="cryptoPairDropdownOptions">
-                        <input id="cryptoName" class="cryptoNameInputsForm" placeholder="Enter the name"/>
+                        <input id="cryptoName" class="cryptoNameInputsForm" autocomplete="off" placeholder="Enter the name"/>
                         <div>
-                            <ul class="dropdownOptionsUl">
-
-                            </ul>
+                            <ul class="dropdownOptionsUl"></ul>
                         </div>
                     </div>
-                    <datalist id="crypto-options"></datalist>
                 </div>
-                    
-                
                 <label for="price">Price</label>
-                <input type="text" id="price" required>
-
+                <input type="text" id="price" autocomplete="off" required>
                 <label for="amount">Amount</label>
-                <input type="text" id="amount" required>
+                <input type="text" id="amount" autocomplete="off" required>
                 <button class="purpleButton recordButton windowButton" id="submitRecord">Make record</button>
             </form>
         </div>
@@ -190,10 +181,10 @@
         <script src="../js/CryptoNote.js"></script>
         <script src="../js/getCryptoPairsList.js"></script>
         <script src="../js/storage.js"></script>
-        <script src="../js/CryptoPair.js"></script>
         <script src="../js/checkCryptoListInStorage.js"></script>
         <script src="../js/formAutocompleteHandler.js"></script>
         <script src="../js/addCrypto.js"></script>
+        <script src="../js/CryptoPair.js"></script>
         <script src="../js/table.js"></script>
         <!-- <script src="../js/getPriceInfo.js"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

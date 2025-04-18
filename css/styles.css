@@ -561,6 +561,7 @@ ul.currencies_grafs {
     display: flex;
     white-space: normal;
     max-width: 100%;
+    font-weight: bold;
 }
 
 .totalAmountDontHave {
@@ -704,6 +705,7 @@ ul.currencies_grafs {
     overflow-x: hidden;
     display: none;
     border: 1.5px solid white;
+    margin-left: -1px;
 }
 
 .cryptoPairDropdownOptions div ul {
@@ -722,8 +724,31 @@ ul.currencies_grafs {
     color:#aaa
 }
 
-
-
+.cryptoPairDropdownOptions div::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .cryptoPairDropdownOptions div::-webkit-scrollbar-track {
+    background: #2e2e3d;
+    border-radius: 10px;
+  }
+  
+  .cryptoPairDropdownOptions div::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .cryptoPairDropdownOptions div::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+  }
+  
+  /* Для Firefox */
+  .cryptoPairDropdownOptions div {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #2e2e3d;
+  }
+  
+  
 
 
 

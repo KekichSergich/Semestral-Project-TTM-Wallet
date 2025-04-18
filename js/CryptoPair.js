@@ -1,3 +1,5 @@
+const cryptoPairInstances = new Map();
+
 class CryptoPair{
     constructor(name, price, image){
         this.name = name;
@@ -22,6 +24,7 @@ class CryptoPair{
         }
 
         const cryptoPair = new CryptoPair(name, price, image);
+        cryptoPairInstances.set(name, cryptoPair);
 
         saveCryptoPairToLocalStorage(cryptoPair);
         cryptoPair.renderCryptoPair();
@@ -31,7 +34,6 @@ class CryptoPair{
     }
 
     renderCryptoPair(){
-        console.log("rendering...")
         const ul = document.querySelector(".currencies_grafs");
         const li = document.createElement("li");
         const img = document.createElement("img");
@@ -53,7 +55,18 @@ class CryptoPair{
         h6Name.textContent = `${(this.name).toUpperCase()}/USDT`;
         h6Price.textContent = this._price;
         closeButton.textContent = "x";
+
+        let totalAmount = countTotalCryptoAmount(this.name);
+        let totalAmountIn$ = totalAmount * this._price;
+
+        divTotalAmount.textContent = "Total: " + totalAmountIn$.toFixed(2) + "$";
+        divTotalAmount.dataset.name = this.name;
     }
+
+    delete(){
+        
+    }
+    
 
     keepUpdatedPrice() {
         // bud jenom jednou
@@ -66,8 +79,48 @@ class CryptoPair{
 
 }
 
+function updateTotalAmount(symbol){
+    const ul = document.querySelector(".currencies_grafs");
+    const liElements = ul.querySelectorAll("li");
+    liElements.forEach(li =>{
+        const h6Elements = li.querySelectorAll("h6");
+        if (h6Elements.length > 0){
+            const h6PairName =  h6Elements[0].textContent.trim();
+            baseSymbol = h6PairName.split("/")[0].toLowerCase();
+        }    
+
+        if(baseSymbol == symbol){
+            const totalAmount = countTotalCryptoAmount(symbol);
+            const price = parseFloat(h6Elements[1].textContent.trim());
+            const totalInUSD = totalAmount * price;
+
+            const totalAmountDiv = li.querySelector(".totalAmount");
+            if (totalAmountDiv){
+                totalAmountDiv.textContent = totalInUSD.toFixed(2);
+            }
+        }
+
+    })
+    // const totalAmount = countTotalCryptoAmount(this.name);
+    // const totalInUSD = totalAmount * this._price;
+
+    this.divTotalAmount.textContent = totalInUSD.toFixed(2);
+    console.log(this.divTotalAmount.innerHTML = totalInUSD.toFixed(2));
+}
+
 function countTotalCryptoAmount(name){
+    let storedCryptoNotes = getFromLocalStorage("storedCryptoNotes");
+    let totalAmount = 0;
+    if (storedCryptoNotes != null){
+        storedCryptoNotes.forEach(note => {
+            if(name == note.name){
+                totalAmount += note.amount;
+            }
+        });
+    }
     
+
+    return totalAmount;
 }
 
 let addPairButtonSubmit = document.getElementById("addPairButton");

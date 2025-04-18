@@ -17,7 +17,6 @@ cryptoInputs.forEach(input => {
         const parentContainer = input.closest(".cryptoPairDropdownOptions");
         activeDiv = parentContainer.querySelector("div");
         activeUl = parentContainer.querySelector("ul");
-        console.log(activeUl)
 
         activeDiv.style.display = "flex";
     

@@ -37,9 +37,8 @@ class CryptoNote {
             closeModal(modalWindow);
         }, 100);
 
-        // this.renderNote
-        // pridat do localStorage
-
+        updateTotalAmount(cryptoNoteName);
+        
     }
 
     renderNote(){

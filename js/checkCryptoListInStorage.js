@@ -1,3 +1,5 @@
+import { getFromLocalStorage } from './storage.js';
+import { saveCryptoInfoListToLocalStorage } from './storage.js';
 // let cryptoListInfo = JSON.parse(localStorage.getItem("CryptoListInfo")) || [];
 let cryptoListInfo = getFromLocalStorage("CryptoListInfo") || [];
 console.log(cryptoListInfo)
@@ -11,7 +13,7 @@ if (cryptoListInfo.length === 0) {
 } 
 
 function shouldUpdateCryptoList(){
-    lastUpdate = getFromLocalStorage("CryptoListLastUpdate");
+    const lastUpdate = getFromLocalStorage("CryptoListLastUpdate");
 
     //never has been updated 
     if (!lastUpdate){

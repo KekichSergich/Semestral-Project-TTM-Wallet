@@ -1,6 +1,10 @@
+import { generateUnicId } from './generateUnicId.js';
+import { saveCryptoNoteToStorage } from './storage.js';
+import { updateTotalAmount } from './CryptoPair.js';
+import { closeModal } from './modalWindows.js';
 // import Graph from ./graph.js
 
-class CryptoNote {
+export class CryptoNote {
     constructor(id, date, name, price, amount){
         this.id = id;
         this.date = date;

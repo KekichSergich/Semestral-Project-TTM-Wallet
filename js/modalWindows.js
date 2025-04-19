@@ -2,14 +2,15 @@ let modalWindow = document.getElementById("modalWindow");
 let recordForm = document.getElementById("recordForm");
 let closeModalWindowButton = document.getElementById("closeModalWindowButton");
 
-function openModal(modal){
+
+export function openModal(modal){
     modal.style.display = "flex";    
     setTimeout(() => {
         modal.querySelector("form").classList.add("show");
     }, 20);
 }
 
-function closeModal(modal){
+export function closeModal(modal){
     modal.querySelector("form").classList.remove("show");
     modal.querySelector("form").classList.add("close");
 

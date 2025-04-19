@@ -1,11 +1,13 @@
-const cryptoPairInstances = new Map();
+import { renderAllCryptoPairs } from './renderAllCryptoPairs.js';
+import { getFromLocalStorage, saveToLocalStorage, saveCryptoPairToLocalStorage } from './storage.js';
+import { closeModal } from './modalWindows.js';
 
-class CryptoPair{
+export class CryptoPair{
     constructor(name, price, image){
         this.name = name;
         this._price = price;
         this.image = image;
-
+        this.element = null;
         // this.keepUpdatedPrice()
     }
 
@@ -24,7 +26,6 @@ class CryptoPair{
         }
 
         const cryptoPair = new CryptoPair(name, price, image);
-        cryptoPairInstances.set(name, cryptoPair);
 
         saveCryptoPairToLocalStorage(cryptoPair);
         cryptoPair.renderCryptoPair();
@@ -46,6 +47,7 @@ class CryptoPair{
         divTotalAmount.classList.add("totalAmount");
         divTotalAmount.classList.add("generalClassTotalAmount");
         closeButton.classList.add("removeButton");
+        closeButton.addEventListener('click', () => this.delete());
 
         li.append(img,div,h6Name,h6Price,divTotalAmount,closeButton);
 
@@ -61,11 +63,39 @@ class CryptoPair{
 
         divTotalAmount.textContent = "Total: " + totalAmountIn$.toFixed(2) + "$";
         divTotalAmount.dataset.name = this.name;
+
+        this.element = li;
     }
 
-    delete(){
-        
-    }
+    delete() {
+        if (this.element) {
+          this.element.remove();
+          let pairs = getFromLocalStorage("storedCryptoPairs");
+
+          pairs = pairs.filter(pair => pair.name !== this.name)
+          localStorage.setItem("storedCryptoPairs", JSON.stringify(pairs));
+
+          renderAllCryptoPairs();
+
+        }
+      }
+
+    // delete(){
+    //     const deleteButtons = document.querySelectorAll(".removeButton");
+    //     const ul = document.querySelector(".currencies_grafs");
+    //     activeCloseButton = null;
+
+
+    //     deleteButtons.forEach(button => {
+    //         button.addEventListener("click", (event) => {
+    //             event.preventDefault;
+    //             activeCloseButton = button;
+
+    //             parentLi = activeCloseButton.closest("li");
+
+    //         })
+    //     })
+    // }
     
 
     keepUpdatedPrice() {
@@ -79,9 +109,10 @@ class CryptoPair{
 
 }
 
-function updateTotalAmount(symbol){
+export function updateTotalAmount(symbol){
     const ul = document.querySelector(".currencies_grafs");
     const liElements = ul.querySelectorAll("li");
+    let baseSymbol = null;
     liElements.forEach(li =>{
         const h6Elements = li.querySelectorAll("h6");
         if (h6Elements.length > 0){
@@ -103,9 +134,6 @@ function updateTotalAmount(symbol){
     })
     // const totalAmount = countTotalCryptoAmount(this.name);
     // const totalInUSD = totalAmount * this._price;
-
-    this.divTotalAmount.textContent = totalInUSD.toFixed(2);
-    console.log(this.divTotalAmount.innerHTML = totalInUSD.toFixed(2));
 }
 
 function countTotalCryptoAmount(name){

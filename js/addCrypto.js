@@ -1,3 +1,6 @@
+import { CryptoNote } from './CryptoNote.js';
+
+
 let submitRecord = document.getElementById("submitRecord");
 
 submitRecord.addEventListener("click", function(event){

@@ -55,7 +55,80 @@
         <section class="currencies">
             <button id="leftButton" class="scroll-button left">◄</button>
             <ul class="currencies_grafs">
-                <!-- <li>
+                
+            </ul>
+            <button id="rightButton" class="scroll-button right">►</button>
+        </section>
+
+
+
+        <!-- NEW PAIR FORM -->
+
+        <div id="addNewPairModalWindow" class="modalWindow">
+            <form id="addNewPairForm">
+                <span id="closeNewPairModalButton">x</span>
+                <div class="column">
+                    <label for="pairName">Pair Name</label>
+                    <div class="cryptoPairDropdownOptions">
+                        <input type="text" id="pairName" class="cryptoNameInputsForm" autocomplete="off" placeholder="For ex. btc" required>
+                        <div>
+                            <ul class="dropdownOptionsUl"></ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <label for="pairPrice">Pair Price</label>
+                <input type="text" id="pairPrice" class="newPairInput" autocomplete="off" required>
+                <div class="file-input-container">
+                    <label for="imageSrc">Choose an Image</label>
+                    <input type="text" id="imageSrc" name="imageSrc" class="newPairInput" required>
+                </div>              
+                <button class="purpleButton" id="addPairButton">Add Pair</button>
+            </form>
+        </div>
+        
+        
+
+        <!-- NEW CRYPTO NOTE FORM-->
+
+        <div class="modalWindow" id="modalWindow">
+            <form id="recordForm">
+                <span id="closeModalWindowButton">x</span>
+                <label for="date">Date</label>
+                <input type="date" id="date" required>
+                <div class="column">
+                    <label for="cryptoName">Crypto's name</label>
+                    <div class="cryptoPairDropdownOptions">
+                        <input id="cryptoName" class="cryptoNameInputsForm" autocomplete="off" placeholder="Enter the name"/>
+                        <div>
+                            <ul class="dropdownOptionsUl"></ul>
+                        </div>
+                    </div>
+                </div>
+                <label for="price">Price</label>
+                <input type="text" id="price" autocomplete="off" required>
+                <label for="amount">Amount</label>
+                <input type="text" id="amount" autocomplete="off" required>
+                <button class="purpleButton recordButton windowButton" id="submitRecord">Make record</button>
+            </form>
+        </div>
+
+        <script type="module" src="../js/modalWindows.js"></script>
+        <script type="module" src="../js/generateUnicId.js"></script>
+        <script type="module" src="../js/CryptoNote.js"></script>
+        <script type="module" src="../js/getCryptoPairsList.js"></script>
+        <script type="module" src="../js/renderAllCryptoPairs.js"></script>
+        <script type="module" src="../js/storage.js"></script>
+        <script type="module" src="../js/checkCryptoListInStorage.js"></script>
+        <script type="module" src="../js/formAutocompleteHandler.js"></script>
+        <script type="module" src="../js/addCrypto.js"></script>
+        <script type="module" src="../js/CryptoPair.js"></script>
+        <script type="module" src="../js/table.js"></script>
+
+    </body>
+</html>
+
+<!-- <li>
                     <img src="../images/crypto_small_icons/BTC.png" alt="BTC">
                     <div>
                         <h6>BTC/USDT</h6>
@@ -119,74 +192,3 @@
                     </div>
                     <div class="totalAmount generalClassTotalAmount"></div>
                 </li> -->
-            </ul>
-            <button id="rightButton" class="scroll-button right">►</button>
-        </section>
-
-
-
-        <!-- NEW PAIR FORM -->
-
-        <div id="addNewPairModalWindow" class="modalWindow">
-            <form id="addNewPairForm">
-                <span id="closeNewPairModalButton">x</span>
-                <div class="column">
-                    <label for="pairName">Pair Name</label>
-                    <div class="cryptoPairDropdownOptions">
-                        <input type="text" id="pairName" class="cryptoNameInputsForm" autocomplete="off" placeholder="For ex. btc" required>
-                        <div>
-                            <ul class="dropdownOptionsUl"></ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <label for="pairPrice">Pair Price</label>
-                <input type="text" id="pairPrice" class="newPairInput" autocomplete="off" required>
-                <div class="file-input-container">
-                    <label for="imageSrc">Choose an Image</label>
-                    <input type="text" id="imageSrc" name="imageSrc" class="newPairInput" required>
-                </div>              
-                <button class="purpleButton" id="addPairButton">Add Pair</button>
-            </form>
-        </div>
-        
-        
-
-        <!-- NEW CRYPTO NOTE FORM-->
-
-        <div class="modalWindow" id="modalWindow">
-            <form id="recordForm">
-                <span id="closeModalWindowButton">x</span>
-                <label for="date">Date</label>
-                <input type="date" id="date" required>
-                <div class="column">
-                    <label for="cryptoName">Crypto's name</label>
-                    <div class="cryptoPairDropdownOptions">
-                        <input id="cryptoName" class="cryptoNameInputsForm" autocomplete="off" placeholder="Enter the name"/>
-                        <div>
-                            <ul class="dropdownOptionsUl"></ul>
-                        </div>
-                    </div>
-                </div>
-                <label for="price">Price</label>
-                <input type="text" id="price" autocomplete="off" required>
-                <label for="amount">Amount</label>
-                <input type="text" id="amount" autocomplete="off" required>
-                <button class="purpleButton recordButton windowButton" id="submitRecord">Make record</button>
-            </form>
-        </div>
-
-        <script src="../js/modalWindows.js"></script>
-        <script src="../js/generateUnicId.js"></script>
-        <script src="../js/CryptoNote.js"></script>
-        <script src="../js/getCryptoPairsList.js"></script>
-        <script src="../js/storage.js"></script>
-        <script src="../js/checkCryptoListInStorage.js"></script>
-        <script src="../js/formAutocompleteHandler.js"></script>
-        <script src="../js/addCrypto.js"></script>
-        <script src="../js/CryptoPair.js"></script>
-        <script src="../js/table.js"></script>
-        <!-- <script src="../js/getPriceInfo.js"></script> -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </body>
-</html>

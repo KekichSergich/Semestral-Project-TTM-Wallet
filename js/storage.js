@@ -1,24 +1,28 @@
+import { CryptoNote } from './CryptoNote.js';
+import { CryptoPair } from './CryptoPair.js';
+import { getCryptoPairsList } from './getCryptoPairsList.js';
+
 let table = document.getElementById("tableNotes");
 
-function saveCryptoNoteToStorage(cryptoNote){
+export function saveCryptoNoteToStorage(cryptoNote){
     let storedCryptoNotes = JSON.parse(localStorage.getItem("storedCryptoNotes")) || [];
     storedCryptoNotes.push(cryptoNote);
     localStorage.setItem("storedCryptoNotes", JSON.stringify(storedCryptoNotes));
 }
 
-function saveCryptoPairToLocalStorage(cryptoPair){
+export function saveCryptoPairToLocalStorage(cryptoPair){
     let storedCryptoPairs = JSON.parse(localStorage.getItem("storedCryptoPairs"))  || [];
     storedCryptoPairs.push(cryptoPair);
     localStorage.setItem("storedCryptoPairs", JSON.stringify(storedCryptoPairs));   
 }
 
-function removeFromStorage(id){
+export function removeFromStorage(id){
     let storedCryptoNotes = JSON.parse(localStorage.getItem("storedCryptoNotes")) || [];
     const filteredStoredCryptoNotes = storedCryptoNotes.filter(note => note.id != id);
     localStorage.setItem("storedCryptoNotes", JSON.parse(filteredStoredCryptoNotes));
 }
 
-function loadCryptoNotesFromStorageToTable(){
+export function loadCryptoNotesFromStorageToTable(){
     let storedCryptoNotes = JSON.parse(localStorage.getItem("storedCryptoNotes")) || [];
 
     storedCryptoNotes.forEach(note => {
@@ -27,9 +31,11 @@ function loadCryptoNotesFromStorageToTable(){
     });
 }
 
+
+
 document.addEventListener("DOMContentLoaded", loadCryptoNotesFromStorageToTable);
 
-function loadCryptoPairsFromLocalStorageToUl(){
+export function loadCryptoPairsFromLocalStorageToUl(){
     let storedCryptoPairs = JSON.parse(localStorage.getItem("storedCryptoPairs")) || [];
 
     storedCryptoPairs.forEach(pair => {
@@ -41,7 +47,7 @@ function loadCryptoPairsFromLocalStorageToUl(){
 document.addEventListener("DOMContentLoaded", loadCryptoPairsFromLocalStorageToUl);
 
 //get all tds of rows starting from second row, because we need to delete all information, not the cell's name.
-function getRowsStartFromSecondRow(){
+export function getRowsStartFromSecondRow(){
     let rows = Array.from(document.querySelectorAll("#tableNotes tr"));
     let rowsWithoutFirstRow = rows.slice(1);
     console.log(rowsWithoutFirstRow);
@@ -49,12 +55,15 @@ function getRowsStartFromSecondRow(){
     
 }
 
-function getFromLocalStorage(key){
-    const value = JSON.parse(localStorage.getItem(key));
-    return value;
-}
+export function getFromLocalStorage(key) {
+    return JSON.parse(localStorage.getItem(key));
+  }
+  
+  export function saveToLocalStorage(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
 
-function clearStorageData(){
+export function clearStorageData(){
     let rowsToDelete = getRowsStartFromSecondRow();
 
     localStorage.clear();
@@ -63,7 +72,7 @@ function clearStorageData(){
     });
 }
 
-async function saveCryptoInfoListToLocalStorage(){
+export async function saveCryptoInfoListToLocalStorage(){
     const cryptoPairListOptions = await getCryptoPairsList();
     localStorage.setItem("CryptoListInfo", JSON.stringify(cryptoPairListOptions));
     localStorage.setItem("CryptoListLastUpdate", Date.now().toString());

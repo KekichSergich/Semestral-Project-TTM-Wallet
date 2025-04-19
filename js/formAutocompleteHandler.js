@@ -1,3 +1,6 @@
+import { getFromLocalStorage } from './storage.js';
+
+
 let cryptoNameInput = document.getElementById("cryptoName");
 let cryptoPairListOptions = getFromLocalStorage("CryptoListInfo");
 let cryptoInputs = document.querySelectorAll(".cryptoNameInputsForm");

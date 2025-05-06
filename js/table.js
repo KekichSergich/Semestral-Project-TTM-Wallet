@@ -1,4 +1,4 @@
-// import {clearStorageData} from ./storage.js
+import {clearStorageData} from "./storage.js";
 
 let resetDataButton = document.getElementById("resetDataButton");
 

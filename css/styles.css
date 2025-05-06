@@ -369,9 +369,16 @@ td {
 section.currencies {
     white-space: nowrap;
     position: relative;
-    overflow-x: hidden;
-    height: 200px;
+    margin-top: 10px;
 }
+
+.slider-wrapper {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    height: 200px;
+  }
 
 .crypto_img_container {
     position: relative;
@@ -412,7 +419,7 @@ section.currencies {
 ul.currencies_grafs {
     position: absolute;
     list-style-type: none;
-    width: 100%;
+    width:100%;
     display: -webkit-inline-flex;
     display: -moz-inline-flex;
     display: -ms-inline-flex;
@@ -423,11 +430,7 @@ ul.currencies_grafs {
     -ms-flex-direction: row;
     -o-flex-direction: row;
     flex-direction: row;
-    -webkit-justify-content: flex-start;
-    -moz-justify-content: flex-start;
-    -ms-justify-content: flex-start;
-    -o-justify-content: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
     -webkit-align-items: center;
     -moz-align-items: center;
     -ms-align-items: center;
@@ -439,9 +442,11 @@ ul.currencies_grafs {
     -webkit-transition: left 0.5s;
     -moz-transition: left 0.5s;
     -o-transition: left 0.5s;
-    transition: left 0.5s;
+    transition: 0.5s ease-in-out;
 }
 
+
+  
 .scroll-button {
     position: absolute;
     top: 50%;
@@ -664,29 +669,59 @@ ul.currencies_grafs {
     margin-bottom: 20px;
 }
 
-.canvas_and_others {
-    width: 100%;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    -moz-flex-direction: row;
-    -ms-flex-direction: row;
-    -o-flex-direction: row;
-    flex-direction: row;
-    -webkit-justify-content: center;
-    -moz-justify-content: center;
-    -ms-justify-content: center;
-    -o-justify-content: center;
-    justify-content: center;
-    -webkit-align-items: flex-start;
-    -moz-align-items: flex-start;
-    -ms-align-items: flex-start;
-    -o-align-items: flex-start;
-    align-items: flex-start;
+.graphs_diagrams{
+   padding-top: 10px;
+
 }
+
+.cryptoChart{
+    width:45%;
+    background-color: #3C354A;
+    border-radius: 10px;
+    border: 2px solid gray;
+    height:340px;
+    position: relative;
+}
+
+#cryptoOptions{
+    position: absolute;
+    right:10px;
+    width:73px;
+    height:25px;
+    background-color: rgb(98, 91, 105);
+    border: 2px solid gray;
+}
+
+#cryptoChartCanvas{
+
+}
+
+.diagram_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width:50%;
+}
+
+.diagram{
+    width:350px;
+    height:350px;
+    border-radius: 50%;
+    background-color: rgb(106, 88, 123);
+    border: 2px solid gray;
+}
+
+.diagram_container ul{
+    list-style-type: none;
+    color:gray;
+    font-weight: bold;
+}
+
+.diagram_container ul li:not(:first-child){
+    margin-top: 10px;
+}
+
 
 
 /*Dropdown options*/

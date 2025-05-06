@@ -54,11 +54,37 @@
         </section>
         <section class="currencies">
             <button id="leftButton" class="scroll-button left">◄</button>
-            <ul class="currencies_grafs">
-                
-            </ul>
+          
+            <div class="slider-wrapper">
+              <ul class="currencies_grafs">
+              </ul>
+            </div>
+          
             <button id="rightButton" class="scroll-button right">►</button>
         </section>
+        <section class="graphs_diagrams">
+            <div class="cryptoChart">
+                <select id="cryptoOptions"></select>
+                <canvas id="cryptoChartCanvas"></canvas>
+            </div>
+            <div class="diagram_container">
+                <div class="diagram">
+
+                </div>
+                <ul>
+                    <li>BTC</li>
+                    <li>ETH</li>
+                    <li>BTC</li>
+                    <li>ETH</li>
+                    <li>BTC</li>
+                    <li>ETH</li>
+                    <li>BTC</li>
+                    <li>ETH</li>
+                </ul>
+            </div>
+            
+        </section>
+          
 
 
 
@@ -124,6 +150,7 @@
         <script type="module" src="../js/addCrypto.js"></script>
         <script type="module" src="../js/CryptoPair.js"></script>
         <script type="module" src="../js/table.js"></script>
+        <script type="module" src="../js/overflowObserver.js"></script>
 
     </body>
 </html>

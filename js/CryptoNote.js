@@ -2,7 +2,8 @@ import { generateUnicId } from './generateUnicId.js';
 import { saveCryptoNoteToStorage } from './storage.js';
 import { updateTotalAmount } from './CryptoPair.js';
 import { closeModal } from './modalWindows.js';
-// import Graph from ./graph.js
+import { updateCryptoChart } from './charts/drawChart.js';
+import { refreshCryptoOptions } from "./charts/drawChart.js";
 
 export class CryptoNote {
     constructor(id, date, name, price, amount){
@@ -42,7 +43,8 @@ export class CryptoNote {
         }, 100);
 
         updateTotalAmount(cryptoNoteName);
-        
+        updateCryptoChart(cryptoNoteName); 
+        refreshCryptoOptions();
     }
 
     renderNote(){

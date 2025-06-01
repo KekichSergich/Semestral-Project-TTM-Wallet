@@ -67,11 +67,11 @@
                 <select id="cryptoOptions"></select>
                 <canvas id="cryptoChartCanvas"></canvas>
             </div>
-            <div class="diagram_container">
+            <div class="diagram-container">
                 <div class="diagram">
-
-                <canvas id="cryptoPieCanvas" style="width: 100%; height: 400px;"></canvas>
-
+                    <canvas id="cryptoPieCanvas"></canvas>
+                    <div id="pieLegend"></div>
+                </div>
             </div>
             
         </section>
@@ -152,7 +152,8 @@
         <script type="module" src="../js/utils/formAutocompleteHandler.js"></script>
         <script type="module" src="../js/utils/overflowObserver.js"></script>
         <script type="module" src="../js/utils/renderAllCryptoPairs.js"></script>
-        <script type="module" src="../js/utils/loadAndRenderAllCryptoPairs.js"></script>
+        <script type="module" src="../js/utils/generateColor.js"></script>
+        <script type="module" src="../js/utils/playDeleteSound.js"></script>
 
         <!-- 2. Работа с хранилищем -->
         <script type="module" src="../js/storage/storage.js"></script>

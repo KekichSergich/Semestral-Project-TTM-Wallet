@@ -2,6 +2,8 @@ import { renderAllCryptoPairs } from '../utils/renderAllCryptoPairs.js';
 import { getFromLocalStorage, saveToLocalStorage, saveCryptoPairToLocalStorage } from '../storage/storage.js';
 import { closeModal } from './modalWindows.js';
 import { listenToOverflowUpdates, triggerOverflowUpdate } from '../utils/overflowObserver.js';
+import { playDeleteSound } from '../utils/playDeleteSound.js';
+
 
 export class CryptoPair{
     constructor(name, price, image){
@@ -70,16 +72,17 @@ export class CryptoPair{
 
     delete() {
         if (this.element) {
-        this.element.remove();
-        let pairs = getFromLocalStorage("storedCryptoPairs");
+            this.element.remove();
+            let pairs = getFromLocalStorage("storedCryptoPairs");
 
-        pairs = pairs.filter(pair => pair.name !== this.name)
-        localStorage.setItem("storedCryptoPairs", JSON.stringify(pairs));
+            pairs = pairs.filter(pair => pair.name !== this.name)
+            localStorage.setItem("storedCryptoPairs", JSON.stringify(pairs));
 
-        renderAllCryptoPairs();
-        
-        triggerOverflowUpdate();
-        console.log(isOverflowing)
+            renderAllCryptoPairs();
+            
+            triggerOverflowUpdate();
+            playDeleteSound();
+
         }
     }
 }

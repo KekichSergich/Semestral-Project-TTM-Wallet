@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", loadCryptoPairsFromLocalStorageToU
 export function getRowsStartFromSecondRow(){
     let rows = Array.from(document.querySelectorAll("#tableNotes tr"));
     let rowsWithoutFirstRow = rows.slice(1);
-    console.log(rowsWithoutFirstRow);
     return rowsWithoutFirstRow;
     
 }

@@ -19,25 +19,39 @@ function getCumulativeAmountsForPair(pairName) {
 // Рендер заглушки при отсутствии данных
 function renderNoDataMessage(canvas) {
     const ctx = canvas.getContext("2d");
-    const container = canvas.parentElement;
-    const rect = container.getBoundingClientRect();
     const scale = window.devicePixelRatio || 1;
 
-    canvas.width = rect.width * scale;
-    canvas.height = rect.height * scale;
-    canvas.style.width = `${rect.width}px`;
-    canvas.style.height = `${rect.height}px`;
+    const container = canvas.parentElement;
+    const rect = container?.getBoundingClientRect();
+    if (!rect || rect.width === 0 || rect.height === 0) {
+        console.warn("Canvas container has zero size. Skipping no-data message.");
+        return;
+    }
 
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    const width = rect.width;
+    const height = rect.height;
+
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // сброс масштаба
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.scale(scale, scale);
+    ctx.setTransform(scale, 0, 0, scale, 0, 0); // применяем корректный масштаб
+
     ctx.fillStyle = "#bbb";
-    ctx.font = "600 18px 'Segoe UI', sans-serif";
+    ctx.font = `${18}px 'Segoe UI', sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("No data to display", rect.width / 2, rect.height / 2);
+
+    ctx.fillText("No data to display", width / 2, height / 2);
 }
+
+
+
+
 
 // Отрисовка осей и подписей
 function drawAxes(ctx, width, height, padding, graphWidth, graphHeight, data, yScale, xStep) {
@@ -173,6 +187,8 @@ function drawLineChart(data) {
 export function updateCryptoChart(symbol) {
     const data = getCumulativeAmountsForPair(symbol);
     const canvas = document.getElementById("cryptoChartCanvas");
+    
+    console.log(canvas)
 
     if (data.length === 0) {
         renderNoDataMessage(canvas);
@@ -225,4 +241,11 @@ document.addEventListener("DOMContentLoaded", () => {
     select.addEventListener("change", () => {
         updateCryptoChart(select.value);
     });
+
+    window.addEventListener("resize", () => {
+        if (select.value) {
+            updateCryptoChart(select.value);
+        }
+    });
+
 });

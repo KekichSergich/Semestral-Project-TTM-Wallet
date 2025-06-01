@@ -3,7 +3,7 @@ import { saveCryptoNoteToStorage } from '../storage/storage.js';
 import { updateTotalAmount } from './CryptoPair.js';
 import { closeModal } from './modalWindows.js';
 import { updateCryptoChart, refreshCryptoOptions } from '../charts/drawChart.js';
-
+import { updatePieChart } from '../charts/drawPieChart.js';
 
 export class CryptoNote {
     constructor(id, date, name, price, amount){
@@ -22,8 +22,6 @@ export class CryptoNote {
         const cryptoNoteName = document.getElementById("cryptoName").value;
         const cryptoNotePrice = document.getElementById("price").value;
         const cryptoNoteAmount = document.getElementById("amount").value;
-
-        console.log(this)
 
         if(!cryptoNoteID || !cryptoNoteDate || !cryptoNoteName || !cryptoNotePrice || !cryptoNoteAmount){
             alert("Fill all fields!");
@@ -45,6 +43,7 @@ export class CryptoNote {
         updateTotalAmount(cryptoNoteName);
         updateCryptoChart(cryptoNoteName); 
         refreshCryptoOptions();
+        updatePieChart()
     }
 
     renderNote(){

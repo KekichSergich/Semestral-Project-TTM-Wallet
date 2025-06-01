@@ -1,6 +1,6 @@
-import { getFromLocalStorage } from '../storage.js';
+import { getFromLocalStorage } from '../storage/storage.js';
 
-// Extract and compute cumulative amounts for the selected crypto pair
+// Получаем данные по паре с накоплением
 function getCumulativeAmountsForPair(pairName) {
     const storedNotes = getFromLocalStorage("storedCryptoNotes") || [];
 
@@ -16,7 +16,7 @@ function getCumulativeAmountsForPair(pairName) {
     }).slice(-14);
 }
 
-// Render fallback message with HiDPI scaling and proper centering
+// Рендер заглушки при отсутствии данных
 function renderNoDataMessage(canvas) {
     const ctx = canvas.getContext("2d");
     const container = canvas.parentElement;
@@ -28,10 +28,10 @@ function renderNoDataMessage(canvas) {
     canvas.style.width = `${rect.width}px`;
     canvas.style.height = `${rect.height}px`;
 
-    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform for accurate centering
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.scale(scale, scale); // Apply scale only to drawing, not to canvas dimensions
+    ctx.scale(scale, scale);
     ctx.fillStyle = "#bbb";
     ctx.font = "600 18px 'Segoe UI', sans-serif";
     ctx.textAlign = "center";
@@ -39,33 +39,12 @@ function renderNoDataMessage(canvas) {
     ctx.fillText("No data to display", rect.width / 2, rect.height / 2);
 }
 
-// Main chart rendering function
-function drawLineChart(data) {
-    const canvas = document.getElementById("cryptoChartCanvas");
-    const ctx = canvas.getContext("2d");
-    const container = canvas.parentElement;
-    const rect = container.getBoundingClientRect();
-
-    const scale = window.devicePixelRatio || 1;
-    canvas.width = rect.width * scale;
-    canvas.height = rect.height * scale;
-    canvas.style.width = `${rect.width}px`;
-    canvas.style.height = `${rect.height}px`;
-    ctx.setTransform(scale, 0, 0, scale, 0, 0);
-
-    const width = rect.width;
-    const height = rect.height;
-    const padding = 50;
-    const graphWidth = width - 2 * padding;
-    const graphHeight = height - 2 * padding;
-
-    ctx.clearRect(0, 0, width, height);
-
+// Отрисовка осей и подписей
+function drawAxes(ctx, width, height, padding, graphWidth, graphHeight, data, yScale, xStep) {
     const maxAmount = Math.max(...data.map(d => d.amount), 1);
-    const xStep = graphWidth / (data.length - 1);
-    const yScale = graphHeight / maxAmount;
+    const ySteps = 5;
+    const stepValue = maxAmount / ySteps;
 
-    // Draw axes
     ctx.strokeStyle = "#ccc";
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -74,16 +53,15 @@ function drawLineChart(data) {
     ctx.lineTo(width - padding, height - padding);
     ctx.stroke();
 
-    // Draw Y axis grid and labels
-    const ySteps = 5;
     ctx.fillStyle = "#aaa";
     ctx.font = "12px 'Segoe UI'";
     ctx.textAlign = "right";
-    const stepValue = maxAmount / ySteps;
 
     for (let i = 0; i <= ySteps; i++) {
-        const y = height - padding - i * stepValue * yScale;
-        ctx.fillText((stepValue * i).toFixed(2), padding - 10, y + 4);
+        const yVal = stepValue * i;
+        const y = height - padding - yVal * yScale;
+        ctx.fillText(yVal.toFixed(2), padding - 10, y + 4);
+
         ctx.beginPath();
         ctx.strokeStyle = "#444";
         ctx.moveTo(padding, y);
@@ -91,22 +69,47 @@ function drawLineChart(data) {
         ctx.stroke();
     }
 
-    // Draw X axis labels
     ctx.textAlign = "center";
     ctx.fillStyle = "#ddd";
+
     data.forEach((point, i) => {
         const x = padding + i * xStep;
-        const y = height - padding + 15;
-        ctx.fillText(point.date.slice(5), x, y);
+        ctx.fillText(point.date.slice(5), x, height - padding + 15);
     });
+}
 
-    // Line animation
+// Главная функция отрисовки графика
+function drawLineChart(data) {
+    const canvas = document.getElementById("cryptoChartCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const container = canvas.parentElement;
+    const rect = container.getBoundingClientRect();
+    const scale = window.devicePixelRatio || 1;
+
+    canvas.width = rect.width * scale;
+    canvas.height = rect.height * scale;
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
+
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = 40;
+    const graphWidth = width - 2 * padding;
+    const graphHeight = height - 2 * padding;
+
+    const maxAmount = Math.max(...data.map(d => d.amount), 1);
+    const xStep = graphWidth / Math.max(1, data.length - 1);
+    const yScale = graphHeight / maxAmount;
+
     const pointCoords = [];
-    let progress = 0;
     const duration = 600;
     const startTime = performance.now();
 
-    function drawGraphPath(p) {
+    function drawGraphPath(progress) {
         ctx.beginPath();
         ctx.strokeStyle = "#bf8fee";
         ctx.lineWidth = 2.5;
@@ -120,40 +123,40 @@ function drawLineChart(data) {
                 ctx.moveTo(x, y);
             } else {
                 const prev = pointCoords[i - 1];
-                ctx.lineTo(
-                    prev.x + (x - prev.x) * p,
-                    prev.y + (y - prev.y) * p
-                );
+                const px = prev.x + (x - prev.x) * progress;
+                const py = prev.y + (y - prev.y) * progress;
+                ctx.lineTo(px, py);
             }
         });
 
         ctx.stroke();
 
-        // Points and labels
         pointCoords.forEach(({ x, y, value }) => {
             ctx.fillStyle = "#4fc3f7";
-            ctx.fillRect(x - 2, y - 2, 4, 4);
+            ctx.beginPath();
+            ctx.arc(x, y, 2, 0, Math.PI * 2);
+            ctx.fill();
+
             ctx.fillStyle = "#fff";
             ctx.font = "11px 'Segoe UI'";
             ctx.textAlign = "center";
-            ctx.fillText(value.toFixed(2), x, y - 8);
+            ctx.fillText(value.toFixed(2), x, y - 10);
         });
     }
 
     function animateLine(now) {
-        progress = Math.min(1, (now - startTime) / duration);
-        ctx.clearRect(padding, padding, graphWidth, graphHeight);
+        const progress = Math.min(1, (now - startTime) / duration);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.setTransform(scale, 0, 0, scale, 0, 0);
+
+        drawAxes(ctx, width, height, padding, graphWidth, graphHeight, data, yScale, xStep);
         drawGraphPath(progress);
 
-        if (progress < 1) {
-            requestAnimationFrame(animateLine);
-        }
+        if (progress < 1) requestAnimationFrame(animateLine);
     }
 
-    animateLine(performance.now());
+    animateLine(startTime);
 
-    // Hover tooltip
     canvas.onmousemove = (e) => {
         const mouseX = (e.offsetX / canvas.clientWidth) * width;
         const mouseY = (e.offsetY / canvas.clientHeight) * height;
@@ -166,6 +169,7 @@ function drawLineChart(data) {
     };
 }
 
+// Обновление графика по символу
 export function updateCryptoChart(symbol) {
     const data = getCumulativeAmountsForPair(symbol);
     const canvas = document.getElementById("cryptoChartCanvas");
@@ -177,16 +181,14 @@ export function updateCryptoChart(symbol) {
     }
 }
 
+// Обновление селекта и вызов графика
 export function refreshCryptoOptions() {
     const select = document.getElementById("cryptoOptions");
     const storedNotes = getFromLocalStorage("storedCryptoNotes") || [];
-
     const uniquePairs = [...new Set(storedNotes.map(n => n.name))];
 
-    // Clear existing options
     select.innerHTML = "";
 
-    // Recreate options
     uniquePairs.forEach(name => {
         const option = document.createElement("option");
         option.value = name;
@@ -194,21 +196,17 @@ export function refreshCryptoOptions() {
         select.appendChild(option);
     });
 
-    // If at least one, render chart for the first one
     if (uniquePairs.length > 0) {
         updateCryptoChart(uniquePairs[0]);
     } else {
-        const canvas = document.getElementById("cryptoChartCanvas");
-        renderNoDataMessage(canvas);
+        renderNoDataMessage(document.getElementById("cryptoChartCanvas"));
     }
 }
 
-
-
+// Первичная инициализация при загрузке
 document.addEventListener("DOMContentLoaded", () => {
     const select = document.getElementById("cryptoOptions");
     const storedNotes = getFromLocalStorage("storedCryptoNotes") || [];
-
     const uniquePairs = [...new Set(storedNotes.map(n => n.name))];
 
     uniquePairs.forEach(name => {
@@ -221,8 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (uniquePairs.length > 0) {
         updateCryptoChart(uniquePairs[0]);
     } else {
-        const canvas = document.getElementById("cryptoChartCanvas");
-        renderNoDataMessage(canvas);
+        renderNoDataMessage(document.getElementById("cryptoChartCanvas"));
     }
 
     select.addEventListener("change", () => {

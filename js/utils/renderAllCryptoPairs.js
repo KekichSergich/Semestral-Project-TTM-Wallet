@@ -1,5 +1,5 @@
-import { CryptoPair } from './CryptoPair.js';
-import { getFromLocalStorage } from './storage.js';
+import { CryptoPair } from '../components/CryptoPair.js';
+import { getFromLocalStorage } from '../storage/storage.js';
 
 export function renderAllCryptoPairs(){
     const ul = document.querySelector(".currencies_grafs");

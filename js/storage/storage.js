@@ -1,6 +1,6 @@
-import { CryptoNote } from './CryptoNote.js';
-import { CryptoPair } from './CryptoPair.js';
-import { getCryptoPairsList } from './getCryptoPairsList.js';
+import { CryptoNote } from '../components/CryptoNote.js';
+import { CryptoPair } from '../components/CryptoPair.js';
+import { getCryptoPairsList } from '../utils/getCryptoPairsList.js';
 
 let table = document.getElementById("tableNotes");
 

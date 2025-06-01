@@ -1,8 +1,7 @@
-import { renderAllCryptoPairs } from './renderAllCryptoPairs.js';
-import { getFromLocalStorage, saveToLocalStorage, saveCryptoPairToLocalStorage } from './storage.js';
+import { renderAllCryptoPairs } from '../utils/renderAllCryptoPairs.js';
+import { getFromLocalStorage, saveToLocalStorage, saveCryptoPairToLocalStorage } from '../storage/storage.js';
 import { closeModal } from './modalWindows.js';
-import { listenToOverflowUpdates } from './overflowObserver.js';
-import { triggerOverflowUpdate } from './overflowObserver.js';
+import { listenToOverflowUpdates, triggerOverflowUpdate } from '../utils/overflowObserver.js';
 
 export class CryptoPair{
     constructor(name, price, image){

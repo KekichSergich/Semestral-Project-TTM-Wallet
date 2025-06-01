@@ -1,7 +1,7 @@
-import { clearStorageData } from "./storage.js";
-import { loadAndRenderAllCryptoPairs } from "./loadAndRenderAllCryptoPairs.js";
-import { triggerOverflowUpdate } from "./overflowObserver.js";
-import { updateCryptoChart } from "./charts/drawChart.js";
+import { clearStorageData } from "../storage/storage.js";
+import { loadAndRenderAllCryptoPairs } from "../utils/loadAndRenderAllCryptoPairs.js";
+import { triggerOverflowUpdate } from "../utils/overflowObserver.js";
+import { updateCryptoChart } from "../charts/drawChart.js";
 
 const resetDataButton = document.getElementById("resetDataButton");
 

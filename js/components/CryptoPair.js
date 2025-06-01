@@ -1,8 +1,9 @@
-import { renderAllCryptoPairs } from './renderAllCryptoPairs.js';
-import { getFromLocalStorage, saveToLocalStorage, saveCryptoPairToLocalStorage } from './storage.js';
+import { renderAllCryptoPairs } from '../utils/renderAllCryptoPairs.js';
+import { getFromLocalStorage, saveToLocalStorage, saveCryptoPairToLocalStorage } from '../storage/storage.js';
 import { closeModal } from './modalWindows.js';
-import { listenToOverflowUpdates } from './overflowObserver.js';
-import { triggerOverflowUpdate } from './overflowObserver.js';
+import { listenToOverflowUpdates, triggerOverflowUpdate } from '../utils/overflowObserver.js';
+import { playDeleteSound } from '../utils/playDeleteSound.js';
+
 
 export class CryptoPair{
     constructor(name, price, image){
@@ -71,16 +72,17 @@ export class CryptoPair{
 
     delete() {
         if (this.element) {
-        this.element.remove();
-        let pairs = getFromLocalStorage("storedCryptoPairs");
+            this.element.remove();
+            let pairs = getFromLocalStorage("storedCryptoPairs");
 
-        pairs = pairs.filter(pair => pair.name !== this.name)
-        localStorage.setItem("storedCryptoPairs", JSON.stringify(pairs));
+            pairs = pairs.filter(pair => pair.name !== this.name)
+            localStorage.setItem("storedCryptoPairs", JSON.stringify(pairs));
 
-        renderAllCryptoPairs();
-        
-        triggerOverflowUpdate();
-        console.log(isOverflowing)
+            renderAllCryptoPairs();
+            
+            triggerOverflowUpdate();
+            playDeleteSound();
+
         }
     }
 }
@@ -175,10 +177,37 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(ul, { childList: true, subtree: true });
 
     function moveLeft() {
+        // Get the current position of the ul
+        let leftUlPos = (ul.getBoundingClientRect()).left;
+        
+        // Get the first item
         let firstItem = ul.firstElementChild;
+        let firstItemPos = (firstItem.getBoundingClientRect()).left;
+        console.log(leftUlPos, firstItemPos);
+    
+        // Get the last item
         let lastItem = ul.lastElementChild;
-        ul.insertBefore(lastItem, firstItem);
+    
+        // Move the last item before the first one, but hide it initially
+        if (firstItemPos > leftUlPos) {
+            ul.insertBefore(lastItem, firstItem);
+            
+            // Hide the last item, move it to the hidden area (for example, outside the visible area)
+            lastItem.style.position = 'absolute';
+            lastItem.style.left = -lastItem.offsetWidth + 'px'; // Hide it outside the screen
+    
+            // Now smoothly move the item into the visible area
+            setTimeout(() => {
+                lastItem.style.transition = 'left 0.5s ease-in-out'; // Smooth movement
+                lastItem.style.left = '0px'; // Move the item into the visible area
+            }, 0); // Immediately after insertion into the DOM
+    
+            currentPos += 270;
+            ul.style.left = currentPos + "px";
+        }
     }
+    
+    
 
     function moveRight() {
         let firstItem = ul.firstElementChild;
@@ -186,23 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 })
 
-function countAllIndexesInUl(ulArray){
-    let indexes = Array.from(ulArray.keys());
-    return indexes;
-}
 
-function countVisibleIndexes(ulArray){
-    const container = ul.getBoundingClientRect();
-    let visibleElements = 0;
-    ulArray.forEach(el => {
-        const item = el.getBoundingClientRect();
-        if (item.left >= container.left && item.right <= container.right){
-            visibleElements++;
-        }
-    })
-    
-    return visibleElements
-}
 
 
 

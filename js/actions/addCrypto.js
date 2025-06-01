@@ -1,4 +1,4 @@
-import { CryptoNote } from './CryptoNote.js';
+import { CryptoNote } from "../components/CryptoNote.js";
 
 
 let submitRecord = document.getElementById("submitRecord");

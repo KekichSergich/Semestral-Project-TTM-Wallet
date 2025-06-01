@@ -1,4 +1,4 @@
-import { getFromLocalStorage } from './storage.js';
+import { getFromLocalStorage } from "../storage/storage.js";
 
 
 let cryptoNameInput = document.getElementById("cryptoName");

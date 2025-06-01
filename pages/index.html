@@ -67,20 +67,11 @@
                 <select id="cryptoOptions"></select>
                 <canvas id="cryptoChartCanvas"></canvas>
             </div>
-            <div class="diagram_container">
+            <div class="diagram-container">
                 <div class="diagram">
-
+                    <canvas id="cryptoPieCanvas"></canvas>
+                    <div id="pieLegend"></div>
                 </div>
-                <ul>
-                    <li>BTC</li>
-                    <li>ETH</li>
-                    <li>BTC</li>
-                    <li>ETH</li>
-                    <li>BTC</li>
-                    <li>ETH</li>
-                    <li>BTC</li>
-                    <li>ETH</li>
-                </ul>
             </div>
             
         </section>
@@ -139,7 +130,7 @@
             </form>
         </div>
 
-        <script type="module" src="../js/modalWindows.js"></script>
+        <!-- <script type="module" src="../js/modalWindows.js"></script>
         <script type="module" src="../js/generateUnicId.js"></script>
         <script type="module" src="../js/CryptoNote.js"></script>
         <script type="module" src="../js/getCryptoPairsList.js"></script>
@@ -148,9 +139,40 @@
         <script type="module" src="../js/checkCryptoListInStorage.js"></script>
         <script type="module" src="../js/formAutocompleteHandler.js"></script>
         <script type="module" src="../js/addCrypto.js"></script>
+        <script type="module" src="../js/loadAndRenderAllCryptoPairs.js"></script>
         <script type="module" src="../js/CryptoPair.js"></script>
         <script type="module" src="../js/table.js"></script>
         <script type="module" src="../js/overflowObserver.js"></script>
+        <script type="module" src="../js/charts/drawChart.js"></script>
+        <script type="module" src="../js/charts/drawPieChart.js"></script> -->
+
+        <!-- 1. Утилиты -->
+        <script type="module" src="../js/utils/generateUnicId.js"></script>
+        <script type="module" src="../js/utils/getCryptoPairsList.js"></script>
+        <script type="module" src="../js/utils/formAutocompleteHandler.js"></script>
+        <script type="module" src="../js/utils/overflowObserver.js"></script>
+        <script type="module" src="../js/utils/renderAllCryptoPairs.js"></script>
+        <script type="module" src="../js/utils/generateColor.js"></script>
+        <script type="module" src="../js/utils/playDeleteSound.js"></script>
+
+        <!-- 2. Работа с хранилищем -->
+        <script type="module" src="../js/storage/storage.js"></script>
+        <script type="module" src="../js/storage/checkCryptoListInStorage.js"></script>
+
+        <!-- 3. Компоненты -->
+        <script type="module" src="../js/components/modalWindows.js"></script>
+        <script type="module" src="../js/components/CryptoPair.js"></script>
+        <script type="module" src="../js/components/CryptoNote.js"></script>
+
+        <!-- 4. Действия -->
+        <script type="module" src="../js/actions/addCrypto.js"></script>
+
+        <!-- 5. Таблица -->
+        <script type="module" src="../js/table/table.js"></script>
+
+        <!-- 6. Чарты -->
+        <script type="module" src="../js/charts/drawChart.js"></script>
+        <script type="module" src="../js/charts/drawPieChart.js"></script>
 
     </body>
 </html>

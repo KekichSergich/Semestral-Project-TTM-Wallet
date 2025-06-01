@@ -1,5 +1,5 @@
-import { getFromLocalStorage } from './storage.js';
-import { saveCryptoInfoListToLocalStorage } from './storage.js';
+import { getFromLocalStorage, saveCryptoInfoListToLocalStorage } from '../storage/storage.js';
+
 // let cryptoListInfo = JSON.parse(localStorage.getItem("CryptoListInfo")) || [];
 let cryptoListInfo = getFromLocalStorage("CryptoListInfo") || [];
 console.log(cryptoListInfo)
@@ -26,4 +26,4 @@ function shouldUpdateCryptoList(){
     if (now - Number(lastUpdate) > oneDay){
         return true;
     }
-}
+} 

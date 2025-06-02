@@ -5,6 +5,7 @@ import { closeModal } from './modalWindows.js';
 import { updateCryptoChart, refreshCryptoOptions } from '../charts/drawChart.js';
 import { updatePieChart } from '../charts/drawPieChart.js';
 import { renderAllCryptoPairs } from '../utils/renderAllCryptoPairs.js';
+import { updateBalanceAmount } from '../utils/updateBalance.js';
 
 
 export class CryptoNote {
@@ -46,6 +47,7 @@ export class CryptoNote {
         updateCryptoChart(cryptoNoteName); 
         refreshCryptoOptions();
         updatePieChart();
+        updateBalanceAmount();
     }
 
     renderNote() {

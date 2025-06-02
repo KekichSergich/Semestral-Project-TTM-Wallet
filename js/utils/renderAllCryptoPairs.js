@@ -8,33 +8,47 @@ export async function renderAllCryptoPairs() {
 
     let storedPairs = getFromLocalStorage("storedCryptoPairs") || [];
 
+    // === Если нет пар — создаём дефолтные ===
     if (storedPairs.length === 0) {
-        // Загружаем список всех криптовалют из API, если ещё не загружен
         let allCrypto = getFromLocalStorage("CryptoListInfo");
         if (!allCrypto) {
-            await saveCryptoInfoListToLocalStorage(); // загружает и сохраняет в localStorage
+            await saveCryptoInfoListToLocalStorage();
             allCrypto = getFromLocalStorage("CryptoListInfo");
         }
 
-        // 4 популярные валюты по symbol
         const popularSymbols = ["btc", "eth", "xrp", "bnb", "ton"];
 
+        // ✅ Создаём дефолтные пары с валидной ценой
         const defaultPairs = allCrypto
             .filter(pair => popularSymbols.includes(pair.symbol.toLowerCase()))
-            .map(pair => new CryptoPair(pair.symbol, pair.price, pair.image));
+            .map(pair => {
+                const price = parseFloat(pair.current_price);
+                return new CryptoPair(
+                    pair.symbol.toLowerCase(),
+                    isNaN(price) ? 0 : price,
+                    pair.image
+                );
+            });
 
+        // ✅ Сохраняем их в хранилище ОДНИМ массивом
+        localStorage.setItem("storedCryptoPairs", JSON.stringify(defaultPairs));
 
+        // Рендерим
         defaultPairs.forEach(pair => {
-            saveCryptoPairToLocalStorage(pair);
             pair.renderCryptoPair();
         });
 
-        return; // уже всё отрисовали
+        return;
     }
 
-    // Рендерим сохранённые пары
+    // === Если уже есть пары в localStorage ===
     storedPairs.forEach(pair => {
-        const cryptoPair = new CryptoPair(pair.name, pair._price, pair.image);
+        const price = parseFloat(pair._price);
+        const cryptoPair = new CryptoPair(
+            pair.name.toLowerCase(),
+            isNaN(price) ? 0 : price,
+            pair.image
+        );
         cryptoPair.renderCryptoPair();
     });
 }

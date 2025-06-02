@@ -14,26 +14,39 @@ export function drawPieChart() {
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
     const storedNotes = getFromLocalStorage("storedCryptoNotes") || [];
+    const cryptoInfo = getFromLocalStorage("CryptoListInfo") || [];
+
     legendContainer.innerHTML = "";
 
-    if (storedNotes.length === 0) {
+    if (storedNotes.length === 0 || cryptoInfo.length === 0) {
         drawNoData(ctx, displayWidth, displayHeight);
         return;
     }
 
-    // === Считаем общую стоимость (цена * количество) ===
-    const totals = {};
+    // === Шаг 1: Собираем общее количество криптовалют по символу ===
+    const amountBySymbol = {};
     for (const note of storedNotes) {
-        const name = note.name.toUpperCase();
-        const amount = parseFloat(note.amount);
-        const price = parseFloat(note.price);
-        const value = amount * price;
-
-        if (!totals[name]) totals[name] = 0;
-        totals[name] += value;
+        const symbol = note.name.toLowerCase();
+        const amount = parseFloat(note.amount) || 0;
+        if (!amountBySymbol[symbol]) amountBySymbol[symbol] = 0;
+        amountBySymbol[symbol] += amount;
     }
 
-    let activeEntries = Object.entries(totals)
+    // === Шаг 2: Умножаем на текущую цену из CryptoListInfo ===
+    const totals = {};
+    for (const [symbol, totalAmount] of Object.entries(amountBySymbol)) {
+        const coin = cryptoInfo.find(c => c.symbol.toLowerCase() === symbol);
+        if (!coin || !coin.current_price) continue;
+
+        const price = parseFloat(coin.current_price);
+        if (isNaN(price)) continue;
+
+        const value = totalAmount * price;
+        totals[symbol.toUpperCase()] = value;
+    }
+
+    // === Преобразуем данные для отрисовки ===
+    const activeEntries = Object.entries(totals)
         .filter(([_, amount]) => amount > 0)
         .map(([name, amount]) => ({ name, amount, active: true }));
 
@@ -47,6 +60,7 @@ export function drawPieChart() {
     const cy = displayHeight / 2;
     const radius = Math.min(displayWidth, displayHeight) / 2 - 10;
 
+    // === Анимация круговой диаграммы ===
     function animatePieChart(progress) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const total = activeEntries.filter(e => e.active).reduce((sum, e) => sum + e.amount, 0);
@@ -90,7 +104,7 @@ export function drawPieChart() {
 
     requestAnimationFrame(animateFrame);
 
-    // === Легенда
+    // === Легенда ===
     activeEntries.forEach((entry, i) => {
         const color = colors[i % colors.length];
 
@@ -135,9 +149,9 @@ function drawNoData(ctx, width, height) {
 }
 
 export function updatePieChart() {
-    drawPieChart(); 
+    drawPieChart();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    drawPieChart(); 
+    drawPieChart();
 });

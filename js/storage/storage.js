@@ -1,7 +1,7 @@
 import { CryptoNote } from '../components/CryptoNote.js';
 import { CryptoPair } from '../components/CryptoPair.js';
 import { getCryptoPairsList } from '../utils/getCryptoPairsList.js';
-
+ 
 let table = document.getElementById("tableNotes");
 
 export function saveCryptoNoteToStorage(cryptoNote){

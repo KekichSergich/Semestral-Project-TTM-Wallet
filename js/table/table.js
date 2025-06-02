@@ -3,7 +3,7 @@ import { renderAllCryptoPairs } from "../utils/renderAllCryptoPairs.js";
 import { triggerOverflowUpdate } from "../utils/overflowObserver.js";
 import { updateCryptoChart } from "../charts/drawChart.js";
 
-const resetDataButton = document.getElementById("resetDataButton");
+const resetDataButton = document.querySelectorAll(".resetButton");
 
 function resetData() {
 
@@ -11,6 +11,9 @@ function resetData() {
     let symbols = cryptoNotes.map(note => note.name);
     console.log(symbols)
 
+    document.querySelectorAll(".tableNotes").forEach(tbody => {
+        tbody.innerHTML = "";
+    });
     // Clear localStorage
     clearStorageData();
 
@@ -25,4 +28,6 @@ function resetData() {
     });
 }
 
-resetDataButton.addEventListener("click", resetData);
+resetDataButton.forEach(button => {
+  button.addEventListener("click", resetData);
+});

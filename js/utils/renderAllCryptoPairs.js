@@ -21,7 +21,8 @@ export async function renderAllCryptoPairs() {
 
         const defaultPairs = allCrypto
             .filter(pair => popularSymbols.includes(pair.symbol.toLowerCase()))
-            .map(pair => new CryptoPair(pair.symbol, pair.price, pair.image)); // image должен быть валидным
+            .map(pair => new CryptoPair(pair.symbol, pair.price, pair.image));
+
 
         defaultPairs.forEach(pair => {
             saveCryptoPairToLocalStorage(pair);

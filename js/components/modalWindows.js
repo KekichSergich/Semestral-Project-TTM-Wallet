@@ -1,16 +1,15 @@
 let modalWindow = document.getElementById("modalWindow");
 let recordForm = document.getElementById("recordForm");
-let closeModalWindowButton = document.getElementById("closeModalWindowButton");
+let closeModalWindowButton = document.querySelector("#closeModalWindowButton");
 
-
-export function openModal(modal){
+export function openModal(modal) {
     modal.style.display = "flex";    
     setTimeout(() => {
         modal.querySelector("form").classList.add("show");
     }, 20);
 }
 
-export function closeModal(modal){
+export function closeModal(modal) {
     modal.querySelector("form").classList.remove("show");
     modal.querySelector("form").classList.add("close");
 
@@ -20,26 +19,27 @@ export function closeModal(modal){
     }, 100);
 }
 
-makeRecordButton.addEventListener("click", function(){
-    openModal(modalWindow)
+// Все кнопки "Make new record"
+document.querySelectorAll(".makeRecordButton").forEach(btn => {
+    btn.addEventListener("click", function() {
+        openModal(modalWindow);
+    });
 });
 
-closeModalWindowButton.addEventListener("click", function(){
+closeModalWindowButton.addEventListener("click", function() {
     closeModal(modalWindow);
-})
+});
 
 let addNewPairModalWindow = document.getElementById("addNewPairModalWindow");
-let openNewPairModalButton = document.getElementById("openNewPairModalButton");
-let closeNewPairModalButton = document.getElementById("closeNewPairModalButton");
+let closeNewPairModalButton = document.querySelector("#closeNewPairModalButton");
 
-openNewPairModalButton.addEventListener("click", function(){
-    openModal(addNewPairModalWindow);
-})
+// Все кнопки "Add new pair"
+document.querySelectorAll(".openNewPairModalButton").forEach(btn => {
+    btn.addEventListener("click", function() {
+        openModal(addNewPairModalWindow);
+    });
+});
 
-closeNewPairModalButton.addEventListener("click", function(){
+closeNewPairModalButton.addEventListener("click", function() {
     closeModal(addNewPairModalWindow);
-})
-
-
-
-
+});

@@ -11,14 +11,12 @@
         <title>Crypto Wallet</title>
     </head>
     <body>
-        <section class="balance">
+        <section class="balance desktop-layout">
             <div class="big_img_container margin-top">
                 <div class="text_container">
                     <h5>TTM Wallet</h5>
                     <h1>To The Moon Wallet</h1>
                     <p>Simplicity. Notes. Crypto. Everything you need to record, display and analyze your cryptocurrency purchases</p>
-                </div>
-                <div class="crypto_img_container">
                 </div>
             </div>
             <div class="balance_overview container_overview margin-top">
@@ -28,15 +26,15 @@
                     <p>Amount:</p>
                     <h3>54322055$</h3>
                 </div>
-                <button class="purpleButton recordButton" id="makeRecordButton">Make new record</button>
-                <button id="openNewPairModalButton" class="purpleButton">Add new pair</button>
+                <button class="purpleButton recordButton makeRecordButton">Make new record</button>
+                <button class="purpleButton openNewPairModalButton">Add new pair</button>
             </div>
             <div class="records_overview container_overview margin-top">
                 <div class="row">
                     <h3>Your records</h3>
                     <button class="purpleButton resetButton" id="resetDataButton">Reset Data</button>
                 </div>
-                <table id="tableNotes">
+                <table id="desktopTableNotes" class="tableNotes">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -52,6 +50,58 @@
                 </table>
             </div>
         </section>
+
+
+
+
+        <!-- 📱 Мобильная версия -->
+        <section class="balance mobile-layout">
+            <div class="mobile_header">
+                <h5>TTM Wallet</h5>
+                <h1>To The Moon Wallet</h1>
+                <div>
+                    <img src="../images/backgrounds/IMG_20240319_154735.png">
+                    <p>Simplicity. Notes, Crypto. Everything you need to display and analyze your cryptocurrency purchases.</p> 
+                </div> 
+            </div>
+            <div class="mobile_balance">
+                <h3>Your balance</h3>
+                <div class="balance_row">
+                    <img src="../images/icons/free-icon-astronaut-4269088.png" alt="user" />
+                    <p><span class="label">Amount:</span> <strong>54322055$</strong></p>
+                </div>
+                <button class="purpleButton makeRecordButton">Make new record</button>
+                <button class="purpleButton openNewPairModalButton">Add new pair</button>
+            </div>
+        </section>
+
+        <section class="section-mobile-table">
+            <div class="records_overview container_overview mobile-overview">
+                <div class="row">
+                    <h3>Your records</h3>
+                    <button class="purpleButton resetButton mobile-reset-data-button" id="resetDataButton">Reset Data</button>
+                </div>
+                <table id="mobileTableNotes" class="tableNotes">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Price $</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+
+
+
         <section class="currencies">
             <button id="leftButton" class="scroll-button left">◄</button>
           
@@ -130,22 +180,6 @@
             </form>
         </div>
 
-        <!-- <script type="module" src="../js/modalWindows.js"></script>
-        <script type="module" src="../js/generateUnicId.js"></script>
-        <script type="module" src="../js/CryptoNote.js"></script>
-        <script type="module" src="../js/getCryptoPairsList.js"></script>
-        <script type="module" src="../js/renderAllCryptoPairs.js"></script>
-        <script type="module" src="../js/storage.js"></script>
-        <script type="module" src="../js/checkCryptoListInStorage.js"></script>
-        <script type="module" src="../js/formAutocompleteHandler.js"></script>
-        <script type="module" src="../js/addCrypto.js"></script>
-        <script type="module" src="../js/loadAndRenderAllCryptoPairs.js"></script>
-        <script type="module" src="../js/CryptoPair.js"></script>
-        <script type="module" src="../js/table.js"></script>
-        <script type="module" src="../js/overflowObserver.js"></script>
-        <script type="module" src="../js/charts/drawChart.js"></script>
-        <script type="module" src="../js/charts/drawPieChart.js"></script> -->
-
         <!-- 1. Утилиты -->
         <script type="module" src="../js/utils/generateUnicId.js"></script>
         <script type="module" src="../js/utils/getCryptoPairsList.js"></script>
@@ -177,67 +211,3 @@
     </body>
 </html>
 
-<!-- <li>
-                    <img src="../images/crypto_small_icons/BTC.png" alt="BTC">
-                    <div>
-                        <h6>BTC/USDT</h6>
-                        <h6>68000.55</h6>
-                    </div>
-                    <div class="totalAmount generalClassTotalAmount"></div>
-                </li>
-                <li>
-                    <img src="../images/crypto_small_icons/ETH.png" alt="ETH">
-                    <div>
-                        <h6>ETH/USDT</h6>
-                        <h6>3856.09</h6>
-                    </div>
-                    <div class="totalAmount generalClassTotalAmount"></div>
-                </li>
-                <li>
-                    <img src="../images/crypto_small_icons/SOL.png" alt="SOL">
-                    <div>
-                        <h6>SOL/USDT</h6>
-                        <h6>323.03</h6>
-                    </div>
-                    <div class="totalAmount generalClassTotalAmount"></div>
-                </li>
-                <li>
-                    <img src="../images/crypto_small_icons/XRP.png" alt="XRP">
-                    <div>
-                        <h6>XRP/USDT</h6>
-                        <h6>64.55</h6>
-                    </div>
-                    <div class="totalAmount generalClassTotalAmount"></div>
-                </li>
-                <li>
-                    <img src="../images/crypto_small_icons/AVAX.png" alt="AVAX">
-                    <div>
-                        <h6>AVAX/USDT</h6>
-                        <h6>54.25</h6>
-                    </div>
-                    <div class="totalAmount generalClassTotalAmount"></div>
-                </li>
-                <li>
-                    <img src="../images/crypto_small_icons/SUI.png" alt="SUI">
-                    <div>
-                        <h6>SUI/USDT</h6>
-                        <h6>34.55</h6>
-                    </div>
-                    <div class="totalAmount generalClassTotalAmount"></div>
-                </li>
-                <li>
-                    <img src="../images/crypto_small_icons/SEI.png" alt="SEI">
-                    <div>
-                        <h6>SEI/USDT</h6>
-                        <h6>14.55</h6>
-                    </div>
-                    <div class="totalAmount generalClassTotalAmount"></div>
-                </li>
-                <li>
-                    <img src="../images/crypto_small_icons/STRK.png" alt="STRK">
-                    <div>
-                        <h6>STRK/USDT</h6>
-                        <h6>123.22</h6>
-                    </div>
-                    <div class="totalAmount generalClassTotalAmount"></div>
-                </li> -->

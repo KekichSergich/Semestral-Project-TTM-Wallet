@@ -8,7 +8,7 @@ import { playDeleteSound } from '../utils/playDeleteSound.js';
 export class CryptoPair{
     constructor(name, price, image){
         this.name = name;
-        this._price = price;
+        this._price = parseFloat(price);
         this.image = image;
         this.element = null;
         // this.keepUpdatedPrice()
@@ -97,7 +97,7 @@ export function updateTotalAmount(symbol){
             const h6PairName =  h6Elements[0].textContent.trim();
             baseSymbol = h6PairName.split("/")[0].toLowerCase();
         }    
-
+        console.log(baseSymbol, symbol)
         if(baseSymbol == symbol){
             const totalAmount = countTotalCryptoAmount(symbol);
             const price = parseFloat(h6Elements[1].textContent.trim());
@@ -118,12 +118,12 @@ function countTotalCryptoAmount(name){
     if (storedCryptoNotes != null){
         storedCryptoNotes.forEach(note => {
             if(name == note.name){
-                totalAmount += note.amount;
+                totalAmount += parseFloat(note.amount);
             }
         });
     }
     
-
+    console.log(totalAmount)
     return totalAmount;
 }
 
@@ -152,8 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
         isOverflowing = ul.scrollWidth > wrapper.clientWidth;
     };
     listenToOverflowUpdates(updateOverflow);
-
-    console.log(ul.getBoundingClientRect())
 
     //check the changes in ul childList
     const observer = new MutationObserver(() => {
@@ -217,195 +215,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
-
-
-
-
-
-
-// function moveLeft() {
-//     let leftUlPos = (ul.getBoundingClientRect()).left;
-//     let firstItem = ul.firstElementChild;
-//     let firstItemPos = (firstItem.getBoundingClientRect()).left
-//     console.log(leftUlPos, firstItemPos)
-
-//     let lastItem = ul.lastElementChild;
-    
-//     if (firstItemPos > leftUlPos){
-//         ul.insertBefore(lastItem, ul.firstElementChild);
-//         ul.style.width = `${ul.offsetWidth + lastItem.offsetWidth}px`;
-//     }
-// }
-
-// function moveRight() {
-//     currentPos -= 270;
-//     ul.style.left = currentPos + "px";
-    
-//     // Проверяем, если последний элемент ушел за правую границу
-//     if (Math.abs(currentPos) >= ul.scrollWidth - wrapper.clientWidth) {
-//         let lastItem = ul.lastElementChild;
-//         ul.insertBefore(lastItem, ul.firstElementChild); // Перемещаем последний элемент в начало
-//         currentPos = 0; // Сбрасываем позицию, чтобы не было резких скачков
-//         ul.style.left = currentPos + "px"; // Обновляем стиль
-//     }
-// }
-
-
-// function moveLeft(){
-//     currentPos += 270;
-//     ul.style.left = currentPos + "px";
-// }
-
-// function moveRight(){
-//     currentPos -= 270;
-//     ul.style.left = currentPos + "px";
-// }
-
-
-
-
-
-// function updateSliderPosition() {
-//   const shift = -(currentIndex * cardWidth);
-//   ul.style.transform = `translateX(${shift}px)`;
-// }
-
-// leftButton.addEventListener('click', () => {
-//     const rect = ul.getBoundingClientRect();
-//     console.log(rect)
-//     const rectl = (ul.getBoundingClientRect()).left;
-//     console.log(rectl);
-//     if (ul.children.length === 0) return;
-
-//     if (currentIndex > 0) {
-//         currentIndex--;
-//     } else {
-//         currentIndex = ul.children.length - visibleCards;
-//     }
-//     updateSliderPosition();
-// });
-
-// rightButton.addEventListener('click', () => {
-//     if (ul.children.length === 0) return;
-
-//     if (currentIndex < ul.children.length - visibleCards) {
-//         currentIndex++;
-//     } else {
-//         currentIndex = 0;
-//     }
-//     updateSliderPosition();
-// });
-
-
-
-// document.addEventListener("DOMContentLoaded", () => {
-//     const list = document.querySelector("ul.currencies_grafs");
-//     const scrollButtons = document.querySelectorAll(".scroll-button");
-
-//     scrollButtons.forEach(button => {
-//         button.addEventListener("click", (event) => {
-//             // 🔁 Получаем актуальные <li> при каждом клике
-//             let items = Array.from(list.children);
-
-//             if (items.length <= 1) {
-//                 console.log("элементов мало");
-//                 return;
-//             }
-
-//             let direction = event.target.classList.contains("left") ? "left" : "right";
-
-//             list.classList.add(`anim-${direction}`);
-
-//             setTimeout(() => {
-//                 if (direction === "left") {
-//                     const first = items[0];
-//                     list.appendChild(first);
-//                     list.classList.remove(`anim-${direction}`);
-//                 } else {
-//                     const last = items[items.length - 1];
-//                     list.prepend(last);
-//                     list.classList.remove(`anim-${direction}`);
-//                 }
-//             }, 300);
-
-
-//             // setTimeout(() => {
-//             //     list.classList.remove(`anim-${direction}`);
-
-//             //     if (direction === "left") {
-//             //         const first = items[0];
-//             //         list.appendChild(first);
-//             //     } else {
-//             //         const last = items[items.length - 1];
-//             //         list.prepend(last);
-//             //     }
-//             // }, 300);
-//         });
-//     });
-// });
-
-
-
-// ASK!!!!!!!!!
-
-
-
-// let ul;
-// let isOverflowing = false;
-// let currentPos = 0;
-
-// document.addEventListener("DOMContentLoaded", () => {
-//     ul = document.querySelector(".currencies_grafs");
-//     ulArray = ul.children;
-//     let indexes = countAllIndexesInUl();
-
-//     console.log(indexes)
-//     console.log(ul.children)
-
-//     const updateOverflow = () => {
-//         isOverflowing = ul.scrollWidth > wrapper.clientWidth;
-//     };
-    
-//     listenToOverflowUpdates(updateOverflow);
-
-//     //check the changes in ul childList
-//     const observer = new MutationObserver(() => {
-        
-//         updateOverflow();
-
-//         if (isOverflowing) {        
-//             leftBtn.addEventListener("click", moveLeft);
-//             rightBtn.addEventListener("click", moveRight)
-//         } else {
-//             leftBtn.removeEventListener("click", moveLeft);
-//             rightBtn.removeEventListener("click", moveRight);
-            
-//             //move back
-//             if (ul.style.left != 0 + "px"){
-//                 currentPos = 0;
-//                 ul.style.left = 0 + "px"
-//             }
-//         }
-//     });
-
-//     observer.observe(ul, { childList: true, subtree: true });
-// })
-
-// function moveLeft(){
-//     currentPos += 270;
-//     ul.style.left = currentPos + "px";
-// }
-
-// function moveRight(){
-//     currentPos -= 270;
-//     ul.style.left = currentPos + "px";
-// }
-
-// function countAllIndexesInUl(){
-//     let ulArray = Array.from(ul.children);
-//     let indexes = Array.from(ulArray.keys());
-//     console.log(ulArray.keys());
-
-//     return indexes;
-// }

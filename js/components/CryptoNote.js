@@ -4,6 +4,8 @@ import { updateTotalAmount } from './CryptoPair.js';
 import { closeModal } from './modalWindows.js';
 import { updateCryptoChart, refreshCryptoOptions } from '../charts/drawChart.js';
 import { updatePieChart } from '../charts/drawPieChart.js';
+import { renderAllCryptoPairs } from '../utils/renderAllCryptoPairs.js';
+
 
 export class CryptoNote {
     constructor(id, date, name, price, amount){
@@ -28,7 +30,7 @@ export class CryptoNote {
             return;
         }
 
-        const newCryptoNote = new CryptoNote(cryptoNoteID, cryptoNoteDate, cryptoNoteName, cryptoNotePrice, cryptoNoteAmount);
+        const newCryptoNote = new CryptoNote(cryptoNoteID, cryptoNoteDate, cryptoNoteName, parseFloat(cryptoNotePrice), parseFloat(cryptoNoteAmount));
         newCryptoNote.renderNote();
         // rovnou napsat vloyeni do stranky
 
@@ -43,21 +45,23 @@ export class CryptoNote {
         updateTotalAmount(cryptoNoteName);
         updateCryptoChart(cryptoNoteName); 
         refreshCryptoOptions();
-        updatePieChart()
+        updatePieChart();
     }
 
-    renderNote(){
-        const table = document.getElementById("tableNotes");
-        const row = table.insertRow();
+    renderNote() {
+    const tables = document.querySelectorAll(".tableNotes");
 
+    tables.forEach(table => {
+        const row = table.insertRow();
         const newCryptoNoteEntries = Object.entries(this);
 
-        newCryptoNoteEntries.forEach(([key, value]) =>{
+        newCryptoNoteEntries.forEach(([key, value]) => {
             let cell = row.insertCell();
-            
             cell.innerText = value;
-        })
-    }
+        });
+    });
+}
+
 
     remove() {}
 

@@ -2,7 +2,6 @@ import { getFromLocalStorage, saveCryptoInfoListToLocalStorage } from '../storag
 
 // let cryptoListInfo = JSON.parse(localStorage.getItem("CryptoListInfo")) || [];
 let cryptoListInfo = getFromLocalStorage("CryptoListInfo") || [];
-console.log(cryptoListInfo)
 let res = shouldUpdateCryptoList();
 
 if (cryptoListInfo.length === 0) {

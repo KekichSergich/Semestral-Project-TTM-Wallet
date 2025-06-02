@@ -111,7 +111,7 @@ function drawLineChart(data) {
 
     const width = rect.width;
     const height = rect.height;
-    const padding = 40;
+    const padding = 50;
     const graphWidth = width - 2 * padding;
     const graphHeight = height - 2 * padding;
 
@@ -187,8 +187,6 @@ function drawLineChart(data) {
 export function updateCryptoChart(symbol) {
     const data = getCumulativeAmountsForPair(symbol);
     const canvas = document.getElementById("cryptoChartCanvas");
-    
-    console.log(canvas)
 
     if (data.length === 0) {
         renderNoDataMessage(canvas);

@@ -474,3 +474,63 @@ select {
     right:10px;
   }
 }
+
+@media screen and (max-width: 450px) {
+  form {
+    max-width: 70vw;
+    width: 70vw;
+    
+  }
+
+  .file-input-label,
+  .newPairInput {
+    font-size: 16px;
+  }
+
+  form div.column {
+    margin: 10px 0;
+  }
+
+  label{
+    font-size: 25px;
+    margin-top: 15px;
+  }
+
+  input {
+    font-size: 30px;
+  }
+
+  input#date{
+    font-size: 25px;
+  }
+
+
+  .cryptoNameInputsForm{
+    width: 100% !important;
+  }
+
+  .cryptoPairDropdownOptions{
+    width: 100%;
+    max-width: 100%;
+  } 
+
+  .cryptoPairDropdownOptions div{
+    margin-left: 2.5px;
+    height: auto;
+    max-height:200px;
+    
+  }
+  #addPairButton{
+    font-size: 25px;
+    margin: 0px;
+  }
+  #submitRecord{
+    font-size: 25px;
+    margin-top: 25px;
+  }
+  form span{
+    font-size: 35px;
+    top: 10px;
+    right: 20px;
+  };
+}

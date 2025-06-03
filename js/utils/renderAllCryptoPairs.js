@@ -52,3 +52,5 @@ export async function renderAllCryptoPairs() {
         cryptoPair.renderCryptoPair();
     });
 }
+
+window.addEventListener("DOMContentLoaded", renderAllCryptoPairs);

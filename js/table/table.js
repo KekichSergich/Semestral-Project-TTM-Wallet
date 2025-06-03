@@ -7,11 +7,11 @@ const resetDataButton = document.querySelectorAll(".resetButton");
 
 function resetData() {
 
-    let cryptoNotes = getFromLocalStorage("storedCryptoNotes");
+    let cryptoNotes = getFromLocalStorage("storedCryptoNotes") || [];
     let symbols = cryptoNotes.map(note => note.name);
     console.log(symbols)
 
-    document.querySelectorAll(".tableNotes").forEach(tbody => {
+    document.querySelectorAll(".tableBody").forEach(tbody => {
         tbody.innerHTML = "";
     });
     // Clear localStorage

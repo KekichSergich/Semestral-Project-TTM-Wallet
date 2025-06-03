@@ -49,7 +49,7 @@ export class CryptoNote {
     }
 
     renderNote() {
-    const tables = document.querySelectorAll(".tableNotes");
+    const tables = document.querySelectorAll(".tableBody");
 
     tables.forEach(table => {
         const row = table.insertRow();

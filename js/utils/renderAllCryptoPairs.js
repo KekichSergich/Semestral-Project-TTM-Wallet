@@ -40,7 +40,7 @@ export async function renderAllCryptoPairs() {
 
         return;
     }
-
+  
     // === Если уже есть пары в localStorage ===
     storedPairs.forEach(pair => {
         const price = parseFloat(pair._price);

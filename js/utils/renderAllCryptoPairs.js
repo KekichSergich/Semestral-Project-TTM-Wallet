@@ -2,23 +2,27 @@ import { CryptoPair } from '../components/CryptoPair.js';
 import { getFromLocalStorage, saveCryptoPairToLocalStorage } from '../storage/storage.js';
 import { saveCryptoInfoListToLocalStorage } from '../storage/storage.js';
 
+// Render all crypto pairs to the UI
 export async function renderAllCryptoPairs() {
     const ul = document.querySelector(".currencies_grafs");
-    ul.innerHTML = "";
+    ul.innerHTML = ""; // Clear the list before rendering
 
     let storedPairs = getFromLocalStorage("storedCryptoPairs") || [];
 
-    // === Если нет пар — создаём дефолтные ===
+    // === If no pairs are stored — create default ones ===
     if (storedPairs.length === 0) {
         let allCrypto = getFromLocalStorage("CryptoListInfo");
+
+        // If crypto info list is not yet loaded, fetch and store it
         if (!allCrypto) {
-            await saveCryptoInfoListToLocalStorage();
+            await saveCryptoInfoListToLocalStorage(); // fetch from API or source
             allCrypto = getFromLocalStorage("CryptoListInfo");
         }
 
+        // List of default popular symbols to show initially
         const popularSymbols = ["btc", "eth", "xrp", "bnb", "ton"];
 
-        // ✅ Создаём дефолтные пары с валидной ценой
+        // ✅ Create default pairs with valid prices
         const defaultPairs = allCrypto
             .filter(pair => popularSymbols.includes(pair.symbol.toLowerCase()))
             .map(pair => {
@@ -30,18 +34,18 @@ export async function renderAllCryptoPairs() {
                 );
             });
 
-        // ✅ Сохраняем их в хранилище ОДНИМ массивом
+        // ✅ Save default pairs to localStorage as a single array
         localStorage.setItem("storedCryptoPairs", JSON.stringify(defaultPairs));
 
-        // Рендерим
+        // Render each default pair
         defaultPairs.forEach(pair => {
             pair.renderCryptoPair();
         });
 
         return;
     }
-  
-    // === Если уже есть пары в localStorage ===
+
+    // === If pairs already exist in localStorage ===
     storedPairs.forEach(pair => {
         const price = parseFloat(pair._price);
         const cryptoPair = new CryptoPair(
@@ -53,4 +57,5 @@ export async function renderAllCryptoPairs() {
     });
 }
 
+// Automatically render crypto pairs on page load
 window.addEventListener("DOMContentLoaded", renderAllCryptoPairs);

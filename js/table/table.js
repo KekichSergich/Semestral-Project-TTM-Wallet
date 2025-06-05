@@ -2,6 +2,7 @@ import { clearStorageData, getFromLocalStorage } from "../storage/storage.js";
 import { renderAllCryptoPairs } from "../utils/renderAllCryptoPairs.js";
 import { triggerOverflowUpdate } from "../utils/overflowObserver.js";
 import { updateCryptoChart } from "../charts/drawChart.js";
+import { updatePieChart } from "../charts/drawPieChart.js";
 
 const resetDataButton = document.querySelectorAll(".resetButton");
 
@@ -26,6 +27,8 @@ function resetData() {
     symbols.forEach(symbol => {
         updateCryptoChart(symbol);
     });
+
+    updatePieChart()
 }
 
 resetDataButton.forEach(button => {

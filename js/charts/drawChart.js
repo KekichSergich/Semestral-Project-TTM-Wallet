@@ -1,6 +1,6 @@
 import { getFromLocalStorage } from '../storage/storage.js';
 
-// Получаем данные по паре с накоплением
+// Retrieve cumulative amounts for a selected crypto pair
 function getCumulativeAmountsForPair(pairName) {
     const storedNotes = getFromLocalStorage("storedCryptoNotes") || [];
 
@@ -9,14 +9,15 @@ function getCumulativeAmountsForPair(pairName) {
         .map(note => ({ date: note.date, amount: parseFloat(note.amount) }))
         .sort((a, b) => new Date(a.date) - new Date(b.date));
 
+    // Calculate cumulative amount over time
     let total = 0;
     return filtered.map(entry => {
         total += entry.amount;
         return { date: entry.date, amount: total };
-    }).slice(-14);
+    }).slice(-14); // Limit to the last 14 records
 }
 
-// Рендер заглушки при отсутствии данных
+// Render placeholder message when there's no data
 function renderNoDataMessage(canvas) {
     const ctx = canvas.getContext("2d");
     const scale = window.devicePixelRatio || 1;
@@ -36,29 +37,25 @@ function renderNoDataMessage(canvas) {
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
 
-    ctx.setTransform(1, 0, 0, 1, 0, 0); // сброс масштаба
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.setTransform(scale, 0, 0, scale, 0, 0); // применяем корректный масштаб
+    ctx.setTransform(scale, 0, 0, scale, 0, 0); // Apply scale transform
 
     ctx.fillStyle = "#bbb";
     ctx.font = `${18}px 'Segoe UI', sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-
     ctx.fillText("No data to display", width / 2, height / 2);
 }
 
-
-
-
-
-// Отрисовка осей и подписей
+// Draw chart axes and labels
 function drawAxes(ctx, width, height, padding, graphWidth, graphHeight, data, yScale, xStep) {
     const maxAmount = Math.max(...data.map(d => d.amount), 1);
     const ySteps = 5;
     const stepValue = maxAmount / ySteps;
 
+    // Draw axis lines
     ctx.strokeStyle = "#ccc";
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -67,6 +64,7 @@ function drawAxes(ctx, width, height, padding, graphWidth, graphHeight, data, yS
     ctx.lineTo(width - padding, height - padding);
     ctx.stroke();
 
+    // Draw Y-axis labels and gridlines
     ctx.fillStyle = "#aaa";
     ctx.font = "12px 'Segoe UI'";
     ctx.textAlign = "right";
@@ -83,16 +81,16 @@ function drawAxes(ctx, width, height, padding, graphWidth, graphHeight, data, yS
         ctx.stroke();
     }
 
+    // Draw X-axis labels (dates)
     ctx.textAlign = "center";
     ctx.fillStyle = "#ddd";
-
     data.forEach((point, i) => {
         const x = padding + i * xStep;
         ctx.fillText(point.date.slice(5), x, height - padding + 15);
     });
 }
 
-// Главная функция отрисовки графика
+// Main function to render the line chart
 function drawLineChart(data) {
     const canvas = document.getElementById("cryptoChartCanvas");
     const ctx = canvas.getContext("2d");
@@ -123,6 +121,7 @@ function drawLineChart(data) {
     const duration = 600;
     const startTime = performance.now();
 
+    // Draw animated graph path
     function drawGraphPath(progress) {
         ctx.beginPath();
         ctx.strokeStyle = "#bf8fee";
@@ -145,6 +144,7 @@ function drawLineChart(data) {
 
         ctx.stroke();
 
+        // Draw points and labels
         pointCoords.forEach(({ x, y, value }) => {
             ctx.fillStyle = "#4fc3f7";
             ctx.beginPath();
@@ -158,6 +158,7 @@ function drawLineChart(data) {
         });
     }
 
+    // Animation loop
     function animateLine(now) {
         const progress = Math.min(1, (now - startTime) / duration);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -171,6 +172,7 @@ function drawLineChart(data) {
 
     animateLine(startTime);
 
+    // Tooltip-like hover effect
     canvas.onmousemove = (e) => {
         const mouseX = (e.offsetX / canvas.clientWidth) * width;
         const mouseY = (e.offsetY / canvas.clientHeight) * height;
@@ -183,7 +185,7 @@ function drawLineChart(data) {
     };
 }
 
-// Обновление графика по символу
+// Update chart when a new crypto pair is selected
 export function updateCryptoChart(symbol) {
     const data = getCumulativeAmountsForPair(symbol);
     const canvas = document.getElementById("cryptoChartCanvas");
@@ -195,7 +197,7 @@ export function updateCryptoChart(symbol) {
     }
 }
 
-// Обновление селекта и вызов графика
+// Populate select dropdown and render initial chart
 export function refreshCryptoOptions() {
     const select = document.getElementById("cryptoOptions");
     const storedNotes = getFromLocalStorage("storedCryptoNotes") || [];
@@ -217,7 +219,7 @@ export function refreshCryptoOptions() {
     }
 }
 
-// Первичная инициализация при загрузке
+// Initialize on page load
 document.addEventListener("DOMContentLoaded", () => {
     const select = document.getElementById("cryptoOptions");
     const storedNotes = getFromLocalStorage("storedCryptoNotes") || [];
@@ -236,14 +238,15 @@ document.addEventListener("DOMContentLoaded", () => {
         renderNoDataMessage(document.getElementById("cryptoChartCanvas"));
     }
 
+    // Handle change in selected crypto pair
     select.addEventListener("change", () => {
         updateCryptoChart(select.value);
     });
 
+    // Redraw chart on window resize
     window.addEventListener("resize", () => {
         if (select.value) {
             updateCryptoChart(select.value);
         }
     });
-
 });

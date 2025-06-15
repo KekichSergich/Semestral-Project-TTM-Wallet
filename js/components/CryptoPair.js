@@ -4,32 +4,29 @@ import { closeModal } from './modalWindows.js';
 import { listenToOverflowUpdates, triggerOverflowUpdate } from '../utils/overflowObserver.js';
 import { playDeleteSound } from '../utils/playDeleteSound.js';
 
-
-export class CryptoPair{
-    constructor(name, price, image){
+export class CryptoPair {
+    constructor(name, price, image) {
         this.name = name;
         this._price = parseFloat(price);
         this.image = image;
         this.element = null;
-        // this.keepUpdatedPrice()
     }
 
-    set price(price){
-        this._price = price;
+    set price(price) {
+        this._price = parseFloat(price);
     }
 
-    static addNewCryptoPair(){
+    static addNewCryptoPair() {
         const name = document.getElementById("pairName").value;
         const price = document.getElementById("pairPrice").value;
         const image = document.getElementById("imageSrc").value;
 
-        if (!name || !price || !image){
+        if (!name || !price || !image) {
             alert("Fill all fields!");
             return;
         }
 
         const cryptoPair = new CryptoPair(name, price, image);
-
         saveCryptoPairToLocalStorage(cryptoPair);
         cryptoPair.renderCryptoPair();
 
@@ -37,7 +34,7 @@ export class CryptoPair{
         closeModal(modalWindow);
     }
 
-    renderCryptoPair(){
+    renderCryptoPair() {
         const ul = document.querySelector(".currencies_grafs");
         const li = document.createElement("li");
         const img = document.createElement("img");
@@ -52,17 +49,16 @@ export class CryptoPair{
         closeButton.classList.add("removeButton");
         closeButton.addEventListener('click', () => this.delete());
 
-        li.append(img,div,h6Name,h6Price,divTotalAmount,closeButton);
-
+        li.append(img, div, h6Name, h6Price, divTotalAmount, closeButton);
         ul.append(li);
 
         img.src = this.image;
-        h6Name.textContent = `${(this.name).toUpperCase()}/USDT`;
-        h6Price.textContent = this._price;
+        h6Name.textContent = `${this.name.toUpperCase()}/USDT`;
+        h6Price.textContent = isNaN(this._price) ? "0" : this._price.toFixed(2);
         closeButton.textContent = "x";
 
         let totalAmount = countTotalCryptoAmount(this.name);
-        let totalAmountIn$ = totalAmount * this._price;
+        let totalAmountIn$ = totalAmount * (isNaN(this._price) ? 0 : this._price); // ✅ FIX: защита от NaN
 
         divTotalAmount.textContent = "Total: " + totalAmountIn$.toFixed(2) + "$";
         divTotalAmount.dataset.name = this.name;
@@ -74,42 +70,38 @@ export class CryptoPair{
         if (this.element) {
             this.element.remove();
             let pairs = getFromLocalStorage("storedCryptoPairs");
-
-            pairs = pairs.filter(pair => pair.name !== this.name)
+            pairs = pairs.filter(pair => pair.name !== this.name);
             localStorage.setItem("storedCryptoPairs", JSON.stringify(pairs));
 
             renderAllCryptoPairs();
-            
             triggerOverflowUpdate();
             playDeleteSound();
-
         }
     }
 }
 
-export function updateTotalAmount(symbol){
+export function updateTotalAmount(symbol) {
     const ul = document.querySelector(".currencies_grafs");
     const liElements = ul.querySelectorAll("li");
-    let baseSymbol = null;
-    liElements.forEach(li =>{
-        const h6Elements = li.querySelectorAll("h6");
-        if (h6Elements.length > 0){
-            const h6PairName =  h6Elements[0].textContent.trim();
-            baseSymbol = h6PairName.split("/")[0].toLowerCase();
-        }    
-        console.log(baseSymbol, symbol)
-        if(baseSymbol == symbol){
-            const totalAmount = countTotalCryptoAmount(symbol);
-            const price = parseFloat(h6Elements[1].textContent.trim());
-            const totalInUSD = totalAmount * price;
 
-            const totalAmountDiv = li.querySelector(".totalAmount");
-            if (totalAmountDiv){
-                totalAmountDiv.textContent = totalInUSD.toFixed(2);
+    liElements.forEach(li => {
+        const h6Elements = li.querySelectorAll("h6");
+        if (h6Elements.length > 0) {
+            const h6PairName = h6Elements[0].textContent.trim();
+            const baseSymbol = h6PairName.split("/")[0].toLowerCase();
+
+            if (baseSymbol === symbol) {
+                const totalAmount = countTotalCryptoAmount(symbol);
+                const price = parseFloat(h6Elements[1].textContent.trim());
+                const totalInUSD = totalAmount * (isNaN(price) ? 0 : price); // ✅ FIX: защита от NaN
+
+                const totalAmountDiv = li.querySelector(".totalAmount");
+                if (totalAmountDiv) {
+                    totalAmountDiv.textContent = "Total: " + totalInUSD.toFixed(2) + "$"; // ✅ FIX: добавлен текст "Total: "
+                }
             }
         }
-
-    })
+    });
 }
 
 function countTotalCryptoAmount(name){
@@ -117,22 +109,21 @@ function countTotalCryptoAmount(name){
     let totalAmount = 0;
     if (storedCryptoNotes != null){
         storedCryptoNotes.forEach(note => {
-            if(name == note.name){
-                totalAmount += parseFloat(note.amount);
+            if(name.toLowerCase() === note.name.toLowerCase()){
+                totalAmount += parseFloat(note.amount) || 0;
             }
         });
     }
-    
-    console.log(totalAmount)
     return totalAmount;
 }
 
-let addPairButtonSubmit = document.getElementById("addPairButton");
 
-addPairButtonSubmit.addEventListener("click", function(event){
+let addPairButtonSubmit = document.getElementById("addPairButton");
+addPairButtonSubmit.addEventListener("click", function (event) {
     event.preventDefault();
     CryptoPair.addNewCryptoPair();
-})
+});
+
 
 
 const leftBtn = document.querySelector(".scroll-button.left");
@@ -212,6 +203,3 @@ document.addEventListener("DOMContentLoaded", () => {
         ul.append(firstItem);''
     }
 })
-
-
-

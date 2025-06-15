@@ -2,16 +2,17 @@ import { clearStorageData, getFromLocalStorage } from "../storage/storage.js";
 import { renderAllCryptoPairs } from "../utils/renderAllCryptoPairs.js";
 import { triggerOverflowUpdate } from "../utils/overflowObserver.js";
 import { updateCryptoChart } from "../charts/drawChart.js";
+import { updatePieChart } from "../charts/drawPieChart.js";
 
 const resetDataButton = document.querySelectorAll(".resetButton");
 
 function resetData() {
 
-    let cryptoNotes = getFromLocalStorage("storedCryptoNotes");
+    let cryptoNotes = getFromLocalStorage("storedCryptoNotes") || [];
     let symbols = cryptoNotes.map(note => note.name);
     console.log(symbols)
 
-    document.querySelectorAll(".tableNotes").forEach(tbody => {
+    document.querySelectorAll(".tableBody").forEach(tbody => {
         tbody.innerHTML = "";
     });
     // Clear localStorage
@@ -26,6 +27,8 @@ function resetData() {
     symbols.forEach(symbol => {
         updateCryptoChart(symbol);
     });
+
+    updatePieChart()
 }
 
 resetDataButton.forEach(button => {

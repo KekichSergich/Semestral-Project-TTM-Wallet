@@ -302,6 +302,116 @@ select {
 }
 
 
+#introModal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.5); 
+  z-index: 9999;
+  overflow: visible;
+  box-sizing: border-box;
+  padding: 40px;
+}
+
+#introModal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url("../images/backgrounds/bg_input2.jpg") center/cover no-repeat;
+  opacity: 1; 
+  z-index: -1; 
+}
+
+#introModal > div {
+  position: relative;
+  background: linear-gradient(145deg, #1a1b23, #2c2d3a);
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 350px;
+  width: 100%;
+  text-align: center;
+  z-index: 1; 
+  opacity: 0.9;
+
+}
+
+.asteroids{
+  position: absolute;
+
+}
+.astronauts{
+  position: absolute;
+}
+
+
+
+#asteroid1 {
+  width: 80px;
+  height: 80px;
+  bottom: -30px;
+  left: -30px;
+  animation: floatAst1 3s ease-in-out infinite;
+}
+
+#asteroid2 {
+  width: 40px;
+  height: 40px;
+  bottom: 24px;
+  left: 45px;
+  animation: floatAst2 4s ease-in-out infinite;
+}
+
+#asteroid3 {
+  width: 50px;
+  height: 50px;
+  bottom: 60px;
+  left: -10px;
+  animation: floatAst3 2.5s ease-in-out infinite;
+}
+
+@keyframes floatAst1 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes floatAst2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes floatAst3 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fishFloat {
+  0%, 100% {
+    transform: scaleX(-1) translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: scaleX(-1) translateY(-10px) rotate(2deg);
+  }
+}
+
+#astronaut1 {
+  top:-50px;
+  right:-10px;
+  transform: scaleX(-1); 
+  animation: fishFloat 3s ease-in-out infinite;
+}
+
+
+
+
+
+
+
 @media screen and (max-width: 1050px) {
   form {
     max-width: 70vw;

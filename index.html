@@ -1,219 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./css/styles.css">
-        <link rel="stylesheet" href="./css/modal.css">
-        <title>Crypto Wallet</title>
-    </head>
-    <body>
-        <section class="balance desktop-layout">
-            <div class="big_img_container margin-top">
-                <div class="text_container">
-                    <h5>TTM Wallet</h5>
-                    <h1>To The Moon Wallet</h1>
-                    <p>Simplicity. Notes. Crypto. Everything you need to record, display and analyze your cryptocurrency purchases</p>
-                </div>
-            </div>
-            <div class="balance_overview container_overview margin-top">
-                <h3>Your balance</h3>
-                <img src="./images/icons/free-icon-astronaut-4269088.png" alt="avatar">
-                <div class="amount_area">
-                    <p>Amount:</p>
-                    <h3>54322055$</h3>
-                </div>
-                <button class="purpleButton recordButton makeRecordButton">Make new record</button>
-                <button class="purpleButton openNewPairModalButton">Add new pair</button>
-            </div>
-            <div class="records_overview container_overview margin-top">
-                <div class="row">
-                    <h3>Your records</h3>
-                    <button class="purpleButton resetButton" id="resetDataButton">Reset Data</button>
-                </div>
-                <table id="desktopTableNotes" class="tableNotes">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Price $</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody class="tableBody">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/modal.css" />
+  <title>Crypto Wallet</title>
+</head>
+<body>
+  <!-- Основной контент страницы -->
+  <section class="balance desktop-layout">
+    <div class="big_img_container margin-top">
+      <div class="text_container">
+        <h5>TTM Wallet</h5>
+        <h1>To The Moon Wallet</h1>
+        <p>Simplicity. Notes. Crypto. Everything you need to record, display and analyze your cryptocurrency purchases</p>
+      </div>
+    </div>
+    <div class="balance_overview container_overview margin-top">
+      <h3>Your balance</h3>
+      <img src="./images/icons/free-icon-astronaut-4269088.png" alt="avatar" />
+      <div class="amount_area">
+        <p>Amount:</p>
+        <h3>54322055$</h3>
+      </div>
+      <button class="purpleButton recordButton makeRecordButton">Make new record</button>
+      <button class="purpleButton openNewPairModalButton">Add new pair</button>
+    </div>
+    <div class="records_overview container_overview margin-top">
+      <div class="row">
+        <h3>Your records</h3>
+        <button class="purpleButton resetButton" id="resetDataButton">Reset Data</button>
+      </div>
+      <table id="desktopTableNotes" class="tableNotes">
+        <thead>
+          <tr><th>ID</th><th>Date</th><th>Name</th><th>Price $</th><th>Amount</th></tr>
+        </thead>
+        <tbody class="tableBody"></tbody>
+      </table>
+    </div>
+  </section>
 
-                    </tbody>
-                </table>
-            </div>
-        </section>
+  <section class="balance mobile-layout">
+    <div class="mobile_header">
+      <h5>TTM Wallet</h5>
+      <h1>To The Moon Wallet</h1>
+      <div>
+        <img src="./images/backgrounds/IMG_20240319_154735.png" alt="astronaut" />
+        <p>Simplicity. Notes, Crypto. Everything you need to display and analyze your cryptocurrency purchases.</p>
+      </div>
+    </div>
+    <div class="mobile_balance">
+      <h3>Your balance</h3>
+      <div class="balance_row">
+        <img src="./images/icons/free-icon-astronaut-4269088.png" alt="user" />
+        <p><span class="label">Amount:</span> <strong>54322055$</strong></p>
+      </div>
+      <button class="purpleButton makeRecordButton">Make new record</button>
+      <button class="purpleButton openNewPairModalButton">Add new pair</button>
+    </div>
+  </section>
 
+  <section class="section-mobile-table">
+    <div class="records_overview container_overview mobile-overview">
+      <div class="row">
+        <h3>Your records</h3>
+        <button class="purpleButton resetButton mobile-reset-data-button">Reset Data</button>
+      </div>
+      <table id="mobileTableNotes" class="tableNotes">
+        <thead>
+          <tr><th>ID</th><th>Date</th><th>Name</th><th>Price $</th><th>Amount</th></tr>
+        </thead>
+        <tbody class="tableBody"></tbody>
+      </table>
+    </div>
+  </section>
 
+  <section class="currencies">
+    <button id="leftButton" class="scroll-button left">◄</button>
+    <div class="slider-wrapper"><ul class="currencies_grafs"></ul></div>
+    <button id="rightButton" class="scroll-button right">►</button>
+  </section>
 
+  <section class="graphs_diagrams">
+    <div class="cryptoChart">
+      <select id="cryptoOptions"></select>
+      <canvas id="cryptoChartCanvas"></canvas>
+    </div>
+    <div class="diagram-container">
+      <div class="diagram">
+        <canvas id="cryptoPieCanvas"></canvas>
+        <div id="pieLegend"></div>
+      </div>
+    </div>
+  </section>
 
-        <!-- 📱 Мобильная версия -->
-        <section class="balance mobile-layout">
-            <div class="mobile_header">
-                <h5>TTM Wallet</h5>
-                <h1>To The Moon Wallet</h1>
-                <div>
-                    <img src="./images/backgrounds/IMG_20240319_154735.png" alt="astronaut" />
-                    <p>Simplicity. Notes, Crypto. Everything you need to display and analyze your cryptocurrency purchases.</p> 
-                </div> 
-            </div>
-            <div class="mobile_balance">
-                <h3>Your balance</h3>
-                <div class="balance_row">
-                    <img src="./images/icons/free-icon-astronaut-4269088.png" alt="user" />
-                    <p><span class="label">Amount:</span> <strong>54322055$</strong></p>
-                </div>
-                <button class="purpleButton makeRecordButton">Make new record</button>
-                <button class="purpleButton openNewPairModalButton">Add new pair</button>
-            </div>
-        </section>
-
-        <section class="section-mobile-table">
-            <div class="records_overview container_overview mobile-overview">
-                <div class="row">
-                    <h3>Your records</h3>
-                    <button class="purpleButton resetButton mobile-reset-data-button">Reset Data</button>
-                </div>
-                <table id="mobileTableNotes" class="tableNotes">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Price $</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody class="tableBody">
-
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-
-
-
-
-        <section class="currencies">
-            <button id="leftButton" class="scroll-button left">◄</button>
-          
-            <div class="slider-wrapper">
-              <ul class="currencies_grafs">
-              </ul>
-            </div>
-          
-            <button id="rightButton" class="scroll-button right">►</button>
-        </section>
-        <section class="graphs_diagrams">
-            <div class="cryptoChart">
-                <select id="cryptoOptions"></select>
-                <canvas id="cryptoChartCanvas"></canvas>
-            </div>
-            <div class="diagram-container">
-                <div class="diagram">
-                    <canvas id="cryptoPieCanvas"></canvas>
-                    <div id="pieLegend"></div>
-                </div>
-            </div>
-            
-        </section>
-          
-
-
-
-        <!-- NEW PAIR FORM -->
-
-        <div id="addNewPairModalWindow" class="modalWindow">
-            <form id="addNewPairForm">
-                <span id="closeNewPairModalButton">x</span>
-                <div class="column">
-                    <label for="pairName">Pair Name</label>
-                    <div class="cryptoPairDropdownOptions">
-                        <input type="text" id="pairName" class="cryptoNameInputsForm" autocomplete="off" placeholder="For ex. btc" required>
-                        <div>
-                            <ul class="dropdownOptionsUl"></ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <label for="pairPrice">Pair Price</label>
-                <input type="text" id="pairPrice" class="newPairInput" autocomplete="off" required>
-                <div class="file-input-container">
-                    <label for="imageSrc">Choose an Image</label>
-                    <input type="text" id="imageSrc" name="imageSrc" class="newPairInput" required>
-                </div>              
-                <button class="purpleButton" id="addPairButton">Add Pair</button>
-            </form>
+  <!-- Форма добавления пары -->
+  <div id="addNewPairModalWindow" class="modalWindow">
+    <form id="addNewPairForm">
+      <span id="closeNewPairModalButton">x</span>
+      <div class="column">
+        <label for="pairName">Pair Name</label>
+        <div class="cryptoPairDropdownOptions">
+          <input type="text" id="pairName" class="cryptoNameInputsForm" autocomplete="off" placeholder="For ex. btc" required />
+          <div><ul class="dropdownOptionsUl"></ul></div>
         </div>
-        
-        
+      </div>
+      <label for="pairPrice">Pair Price</label>
+      <input type="text" id="pairPrice" class="newPairInput" autocomplete="off" required />
+      <div class="file-input-container">
+        <label for="imageSrc">Choose an Image</label>
+        <input type="text" id="imageSrc" name="imageSrc" class="newPairInput" required />
+      </div>
+      <button class="purpleButton" id="addPairButton">Add Pair</button>
+    </form>
+  </div>
 
-        <!-- NEW CRYPTO NOTE FORM-->
-
-        <div class="modalWindow" id="modalWindow">
-            <form id="recordForm">
-                <span id="closeModalWindowButton">x</span>
-                <label for="date">Date</label>
-                <input type="date" id="date" required>
-                <div class="column">
-                    <label for="cryptoName">Crypto's name</label>
-                    <div class="cryptoPairDropdownOptions">
-                        <input id="cryptoName" class="cryptoNameInputsForm" autocomplete="off" placeholder="Enter the name"/>
-                        <div>
-                            <ul class="dropdownOptionsUl"></ul>
-                        </div>
-                    </div>
-                </div>
-                <label for="price">Price</label>
-                <input type="text" id="price" autocomplete="off" required>
-                <label for="amount">Amount</label>
-                <input type="text" id="amount" autocomplete="off" required>
-                <button class="purpleButton recordButton windowButton" id="submitRecord">Make record</button>
-            </form>
+  <!-- Форма новой записи -->
+  <div class="modalWindow" id="modalWindow">
+    <form id="recordForm">
+      <span id="closeModalWindowButton">x</span>
+      <label for="date">Date</label>
+      <input type="date" id="date" required />
+      <div class="column">
+        <label for="cryptoName">Crypto's name</label>
+        <div class="cryptoPairDropdownOptions">
+          <input id="cryptoName" class="cryptoNameInputsForm" autocomplete="off" placeholder="Enter the name" />
+          <div><ul class="dropdownOptionsUl"></ul></div>
         </div>
+      </div>
+      <label for="price">Price</label>
+      <input type="text" id="price" autocomplete="off" required />
+      <label for="amount">Amount</label>
+      <input type="text" id="amount" autocomplete="off" required />
+      <button class="purpleButton recordButton windowButton" id="submitRecord">Make record</button>
+    </form>
+  </div>
 
-        <script type="module" src="./js/utils/generateUnicId.js"></script>
-        <script type="module" src="./js/utils/getCryptoPairsList.js"></script>
-        <script type="module" src="./js/utils/formAutocompleteHandler.js"></script>
-        <script type="module" src="./js/utils/overflowObserver.js"></script>
-        <script type="module" src="./js/utils/renderAllCryptoPairs.js"></script>
-        <script type="module" src="./js/utils/generateColor.js"></script>
-        <script type="module" src="./js/utils/playDeleteSound.js"></script>
+  <!-- Скрипты проекта -->
+  <script type="module" src="./js/utils/generateUnicId.js"></script>
+  <script type="module" src="./js/utils/getCryptoPairsList.js"></script>
+  <script type="module" src="./js/utils/formAutocompleteHandler.js"></script>
+  <script type="module" src="./js/utils/overflowObserver.js"></script>
+  <script type="module" src="./js/utils/renderAllCryptoPairs.js"></script>
+  <script type="module" src="./js/utils/generateColor.js"></script>
+  <script type="module" src="./js/utils/playDeleteSound.js"></script>
+  <script type="module" src="./js/utils/rocketControl.js"></script>
 
-        <script type="module" src="./js/storage/storage.js"></script>
-        <script type="module" src="./js/storage/checkCryptoListInStorage.js"></script>
+  <script type="module" src="./js/storage/storage.js"></script>
+  <script type="module" src="./js/storage/checkCryptoListInStorage.js"></script>
 
-        <script type="module" src="./js/components/modalWindows.js"></script>
-        <script type="module" src="./js/components/CryptoPair.js"></script>
-        <script type="module" src="./js/components/CryptoNote.js"></script>
+  <script type="module" src="./js/components/modalWindows.js"></script>
+  <script type="module" src="./js/components/CryptoPair.js"></script>
+  <script type="module" src="./js/components/CryptoNote.js"></script>
 
-        <script type="module" src="./js/actions/addCrypto.js"></script>
-        <script type="module" src="./js/table/table.js"></script>
+  <script type="module" src="./js/actions/addCrypto.js"></script>
+  <script type="module" src="./js/table/table.js"></script>
 
-        <script type="module" src="./js/charts/drawChart.js"></script>
-        <script type="module" src="./js/charts/drawPieChart.js"></script>
+  <script type="module" src="./js/charts/drawChart.js"></script>
+  <script type="module" src="./js/charts/drawPieChart.js"></script>
 
-  <!-- Регистрация Service Worker -->
-    <script>
+  <!-- <script>
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
+      window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js')
-
-            .then(reg => console.log("Service Worker registered", reg))
-            .catch(err => console.error("Service Worker error", err));
-        });
+          .then(reg => console.log('Service Worker registered', reg))
+          .catch(err => console.error('Service Worker error', err));
+      });
     }
-    </script>
+  </script> -->
 
-
-    </body>
+<div id="introModal">
+    <div>
+        <h2>Welcome to TTM Wallet</h2>
+        <p>Click the rocket to start using the site!</p>
+        <div id="svgContainer" style="height: 200px;">
+            <svg id="rocketSVG" width="100" height="200" viewBox="0 0 100 200" style="cursor: pointer;">
+                <ellipse cx="50" cy="130" rx="20" ry="50" fill="#fff"/>
+                <polygon points="50,30 30,130 70,130" fill="#eee"/>
+                <polygon points="40,140 0,160 40,160" fill="#fff"/>
+                <polygon points="60,140 100,160 60,160" fill="#fff"/>
+                <polygon id="flame" points="45,180 55,180 60,200 50,190 40,200" fill="orange"/>
+            </svg>
+        </div>
+        <!-- <svg id="ast1" class="asteroids" width="150" height="150" viewBox="0 0 100 100">
+            <path fill="#3a3f4a" stroke="#2a2e38" stroke-width="4"
+            d="M20,40
+            q10,-20 30,-15
+            q20,5 25,20
+            q5,15 -10,25
+            q-15,10 -30,5
+            q-15,-5 -20,-25 z"/>
+            <circle cx="45" cy="45" r="6" fill="#2e3139"/>
+            <ellipse cx="30" cy="35" rx="5" ry="3" fill="#2e3139"/>
+            <circle cx="60" cy="60" r="4" fill="#2e3139"/>
+        </svg> -->
+        <img src="/images/icons/free-icon-asteroid-2531034.png" alt="asteroid" class="asteroids" id="asteroid1" />
+        <img src="/images/icons/free-icon-asteroid-2531034.png" alt="asteroid" class="asteroids" id="asteroid2" />
+        <img src="/images/icons/free-icon-asteroid-2531034.png" alt="asteroid" class="asteroids" id="asteroid3" />
+        <img src="/images/icons/free-icon-astronaut-2026506.png" alt="astronaut" class="astronauts" id="astronaut1" />
+    </div>
+</div>
+</body>
 </html>
- 
